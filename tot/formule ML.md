@@ -24,6 +24,18 @@ A decision three that perfectly classify training examples could lead to overfit
 
 # Bayesian Learning
 
+## Maximum a Posteriori Hypothesis
+
+$$Vmap = \argmax P(h \mid D) = argmax \frac{P(D\mid h)P(h)}{P(D)}$$
+$$ = argmax {P(D\mid h)P(h)}$$
+
+## Maximum Likelihood
+
+$$V_{ML} = \argmax P(h \mid D) = \argmax P(D\mid h)$$
+
+under the assumption P(hi) = P(hj), $j\not ={i}$
+
+
 ## Naive and Approximation to Optimal
 
 ### Optimal
@@ -104,7 +116,7 @@ $$ P(C|x,D, K) = \frac{1}{k} \sum_{xn \in Nk(xn,D)} I(tn=C)$$
 
 ## Forward step
 
-(![Alt text](12-ANN_2p-1.jpeg))
+(![Alt text](12-ANN_2p.jpeg))
 
 ## Backward step
 ![Alt text](12-ANN_3-1.jpeg)
@@ -215,4 +227,222 @@ $$ w = \argmin E(w)$$
 Iterative reweighted least squares. In a nutshell SGD but with Hessian Matrix 
 
 
+
+# CNN
+
+$$w_{out} = \frac{w_{in} - w_{k} + 2p}{s}+1 $$
+$$h_{out} = \frac{h{in} - h_{k} + 2p}{s}+1 $$
+$$ \mid \theta \mid = w_{k} \times h_{k} \times d_{in} \times d_{out} + d_{out} $$
+
+Padding necessario: 
+$$ \left\lfloor \frac{wk}{2} \right\rfloor $$
+
+# ANN 
+## Cost function
+
+Model implicitly defines a conditional distribution $( p(t|x, \theta) )$
+
+Cost function: Maximum likelihood principle (cross-entropy)
+
+$$ J(\theta) = \mathbb{E}_{x,t \sim D} [-\ln(p(t|x, \theta))] $$
+
+Example:
+Assuming additive Gaussian noise we have
+
+$$ p(t|x, \theta) = \mathcal{N}(t|f(x; \theta), \beta^{-1}I) $$
+
+and hence
+
+$$ J(\theta) = \mathbb{E}_{x,t \sim D} \left[ \frac{1}{2} \| t - f(x; \theta) \|^2 \right] $$
+
+Maximum likelihood estimation with Gaussian noise corresponds to mean squared error minimization.
+
+## Output units activation functions
+
+### Regression
+
+Linear units: Identity activation function
+$$ y = W^T h + b $$
+
+Use a Gaussian distribution noise model
+$$ p(t|x) = \mathcal{N}(t|y, \beta^{-1}) $$
+
+Loss function: maximum likelihood (cross-entropy) that is equivalent to minimizing mean squared error.
+
+Note: linear units do not saturate.
+
+
+### Binary classification
+
+Output units: Sigmoid activation function
+$$ y = \sigma(W^T h + b) $$
+
+Loss function: Binary cross-entropy
+$$ J(\theta) = \mathbb{E}_{x,t\sim D} [- \ln p(t|x)] $$
+
+The likelihood corresponds to a Bernoulli distribution
+
+Output unit saturates only when it gives the correct answer.
+
+
+### Multi-class classification
+
+
+Output units: Softmax activation functions
+$$ y_i = \text{softmax}(\alpha^{(i)}) = \frac{\exp(\alpha^{(i)})}{\sum_j \exp(\alpha_j)} $$
+
+Loss function: Categorical cross-entropy
+$$ J_i(\theta) = \mathbb{E}_{x,t \sim D} [- \ln \text{softmax}(\alpha^{(i)})] $$
+
+with $( \alpha^{(i)} = w_i^T h + b_i )$.
+
+Likelihood corresponds to a Multinomial distribution
+
+Output units saturate only when there are minimal errors.
+
+
+
+
+# PCA 
+
+### Express the points in M: 
+
+$$ \overline{x}_{n} = \sum_{i=1}^{n} (x_{n}^T u_{i})u_{i}$$
+
+### Intrinsic dimension: 
+
+Minimum dimension to represent the dataset. 
+
+
+# SVM
+## SVM Classification
+
+Maximum Likelihood Solution: 
+
+$$ w^*, w0^* = argmin \frac{1}{2}||w||^2$$
+
+subject to: 
+
+$$ tn(w^Tx + w0) \geq 1$$
+
+Classification new instance: 
+
+$$y(x') = sign(\sum_{xk\in SV} a^*t_{k}x'^Txk + w0^*)$$
+
+
+### Soft margins
+Slack Variables in order to manage noise in the dataset: 
+
+1. $\xi_{n}=0$ if point on or inside the correct margin boundary
+2. $0<\xi_{n}\leq1$ if point inside the margin but correct side
+3. $\xi_{n}>1$ if point on wrong side of the boundary
+
+subject to soft margin constraint: 
+$$ t_{n}y(x_{n}) \geq 1-\xi_{n}$$ 
+
+Maximum Likelihood Solution: 
+$$w^*, w0^* = \argmin \frac{1}{2}||w||^2 + C \sum_{n=1}^{N} \xi_{n}$$
+
+
+## SVM Kernelized
+$$
+J(w, C) = C \sum_{i=1}^{N} L_{\epsilon}(t_i, y_i) + \frac{1}{2} \| w \|^2,
+$$
+
+$$
+L_{\epsilon}(t, y) = 
+\begin{cases} 
+0 & \text{se } |t-y|<\epsilon \\
+|t-y|-\epsilon & \text{altrimenti}
+\end{cases}
+$$
+
+
+The main idea is to use a kernelized regression method computing the optimal solution without the Gramm Matrix that is computationally intensive. 
+So we use di $\epsilon-insensitive$ error function. Is not differentiable
+
+So we've introduced slack variables. 
+
+$$ \xi^+ > 0 \lrArr tn>y(xn) + \epsilon $$
+
+$$ \xi^- > 0 \lrArr tn<y(xn) - \epsilon $$
+
+So the error function: 
+$$
+J(w, C) = C \sum_{i=1}^{N} (\xi^+ + \xi^-) + \frac{1}{2} \| w \|^2,
+$$
+
+# Least Squares
+
+The linear model: 
+
+$$ y(x) = W^Tx$$
+
+1 of K coding scheme for t: 
+
+$$ tk = 1 \rArr x \in Ck, tj = 0 \\s.t. \text{  } j \not ={k}$$
+
+
+#### The error function
+$$ E(w) = \frac{1}{2}Tr\{{(XW - T)^T(XW - T)}\} $$
+
+The solution: 
+
+$$ w = (X^T X)^{-1}X^T T$$
+
+
+# Gaussian Mixture Model
+
+Gaussian Mixture Model is defined as: 
+
+$$ P(x \mid \pi, \mu, \Sigma) = \sum_{k=1}^{K} \pi_{k}N(x \mid \mu_{k}, \Sigma_{k})$$
+
+### Maximum log-likelihood: 
+
+$$\ln P(x \mid \pi, \mu, \Sigma) = \sum_{n=1}^{N} \ln(\sum_{k=1}^{K} \pi_{k}N(x \mid \mu_{k}, \Sigma_{k}))$$
+
+
+### Expectation Maximization:
+
+$$\pi_{k} = \frac{Nk}{N}$$
+$$N_{k} = \sum_{n=1}^{N} \gamma(Z_{nk})$$
+$$\mu_{k} = \frac{1}{Nk}\sum_{n=1}^{N} \gamma(Z_{nk}){x_{n}}$$
+$$\Sigma_{k} = \frac{1}{Nk}\sum_{n=1}^{N} \gamma(Z_{nk})(xn - \mu_{k})(xn - \mu_{k})^T$$
+
+where: 
+
+$$\gamma(Z_{nk}) = \frac{\pi_{k} N(x\mid \mu_{k}, \Sigma_{k})}{\sum_{j=1}^{K} \pi_{j}N(x|\mu_{j}, \Sigma_{j})} $$
+
+
+# Ensemble 
+
+## AdaBoost
+
+Given $( D = \{ (x_1, t_1), \ldots, (x_N, t_N) \} ), where ( x_n \in X, t_n \in { -1, +1 } )$
+
+1. Initialize $( w_n^{(1)} = \frac{1}{N}, n = 1, \ldots, N. )$
+2. For $( m = 1, \ldots, M )$:
+
+   - Train a weak learner $( y_m(x) )$ by minimizing the weighted error function:
+     $$
+     J_m = \sum_{n=1}^{N} w_n^{(m)} I(y_m(x_n) \neq t_n),
+     $$
+     $I(e) = \begin{cases} 
+     1 & \text{if } e \text{ is true} \\
+     0 & \text{otherwise}
+     \end{cases}$
+
+   - Evaluate:
+     $$
+     \epsilon_m = \frac{\sum_{n=1}^{N} w_n^{(m)} I(y_m(x_n) \neq t_n)}{\sum_{n=1}^{N} w_n^{(m)}}
+     $$
+     and
+     $$
+     \alpha_m = \ln \left( \frac{1 - \epsilon_m}{\epsilon_m} \right)
+     $$
+
+   - Update the data weighting coefficients:
+     $$
+     w_n^{(m+1)} = w_n^{(m)} \exp[\alpha_m I(y_m(x_n) \neq t_n)]
+     $$
 
