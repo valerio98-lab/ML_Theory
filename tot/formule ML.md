@@ -193,7 +193,23 @@ $$
 
 ## Kernelized version for regression
 
+Typical Question:
 
+$y(x) = \sum_{i=1}^{n} \alpha_{i}x_{i}^Tx$
+
+Now, if a vector input x appears in an algorithm only in the form of inner product we can replace the inner product with some kernel k(x,x'), where: 
+
+$k$ is a kernel function defined as a real-valued function k(x,x') where x,x' $\in$ X. A similarity measure between instances x and x'.
+
+Tipically simmetryc and non negative, **BUT NOT STRICTLY REQUIRED**
+
+After kernel trick we obtain: 
+
+$y(x) = \sum_{i=1}^{n} \alpha_{i}k(x_{n},x)$
+
+### Kernel Trick
+
+The "kernel trick" is a technique used in machine learning algorithms that allows operations in high-dimensional spaces without explicitly computing the transformations of data into those spaces. It leverages kernel functions to compute the dot product (a measure of similarity) between vectors in a higher-dimensional space, enabling linear algorithms to solve non-linear problems. This makes it possible, for example, to separate classes of data that aren't linearly separable in the original space.
 
 # K-Means
 
@@ -300,10 +316,24 @@ Likelihood corresponds to a Multinomial distribution
 
 Output units saturate only when there are minimal errors.
 
+# Autoencoder
+
+What is an autoencoder? 
+1. A combination of two NN, an encoder and a decoder.
+2. trained based on reconstruction loss
+3. provides low dimensional representation 
+4. Bottleneck concept, which learn to reconstruct input minimizing a loss function
+5. Autoencoders can be seen as a method for non-linear principal component analysis
 
 
 
 # PCA 
+
+### Principali Usi:
+1. Dimensionality reduction
+2. data compression
+3. Data visualization
+4. Feature Extraction
 
 ### Express the points in M: 
 
@@ -312,6 +342,29 @@ $$ \overline{x}_{n} = \sum_{i=1}^{n} (x_{n}^T u_{i})u_{i}$$
 ### Intrinsic dimension: 
 
 Minimum dimension to represent the dataset. 
+
+### Goal: Maximize data variance after projection to some direction u1
+
+Projected Points: 
+$x_{n}^Tu1$
+
+Anzitutto fissiamo $\overline{x}$ come la media del nostro dataset, centriamo dunque il dataset sulla nostra media in maniera tale che esso abbiamo media 0. 
+A questo punto passiamo alla fase di massimizzazione della varianza calcolando la varianza come: 
+
+$$ \frac{1}{N} \sum_{n=1}^N [u_{1}^Tx_{n} - u_{1}^T\overline{x}]^2 = u_1^TSu_1$$
+
+Il problema da risolvere diventa: 
+
+$$\max u_1^TSu_1$$
+
+Da cui massimizzando e settando la derivata rispetto ad u1 a 0:
+
+$$Su_1 = \lambda u_1$$
+$$u_1^TSu_1 = \lambda_1$$
+
+Chiamata first principal component. 
+
+S = matrice di Covarianza
 
 
 # SVM
@@ -445,4 +498,60 @@ Given $( D = \{ (x_1, t_1), \ldots, (x_N, t_N) \} ), where ( x_n \in X, t_n \in 
      $$
      w_n^{(m+1)} = w_n^{(m)} \exp[\alpha_m I(y_m(x_n) \neq t_n)]
      $$
+
+# Perceptron
+
+Combinazione lineare pesata dell'input 
+
+$$
+o(x_1, \ldots, x_d) = 
+\begin{cases} 
+1 & \text{if } w_0 + w_1x_1 + \ldots + w_dx_d > 0 \\
+-1 & \text{otherwise}
+\end{cases}
+$$
+
+$$
+o(\mathbf{x}) = 
+\begin{cases} 
+1 & \text{if } \mathbf{w}^T\mathbf{x} > 0 \\
+-1 & \text{otherwise}
+\end{cases} 
+= \text{sign}(\mathbf{w}^T\mathbf{x})
+$$
+
+## Error Function
+
+$$E(W)=\frac{1}{2} \sum_{n=1}^{N}(tn-w^Tx_{n})^2$$
+
+calcola i parametri attraverso SGD. 
+
+# Generative vs Discriminant Model 
+
+A generative model learn the class conditional densities of each class $P(x\mid Ck)$ trying to understand the joint distribution of the data. 
+
+Once we have this quantity we can easily compute the posterior $P(Ck \mid x)$ using Bayes Rule. 
+
+On the other hand a discriminative model compute directly P(Ck \mid x). 
+
+So we can define a generative model as: 
+
+$$P(Ck\mid x) = \frac{P(x \mid Ck)P(Ck)}{\sum_{j}P(x \mid Cj)P(Cj)} = \frac{exp(ak)}{\sum_{j}exp(aj)}$$
+
+$a_{k} = \ln P(x \mid Ck)P(Ck)$
+
+On the other hand a **discriminative model**:
+
+$$P(Ck\mid x) =  \frac{exp(ak)}{\sum_{j}exp(aj)}$$
+
+Maximum log-likelihood solution: 
+
+$$ w^* = argmax \ln P(t\mid w, x)$$
+
+
+Note:
+likelihood generative 2 classi utile per esercizio: 
+$$P(t \mid \pi_1, \mu_1, \mu_2, \Sigma, D) = \prod_{n=1}^{N}[\pi_1N(x_n \mid u_1, \Sigma)]^{t_a}[(1-\pi_1)N(x_n \mid u_2, \Sigma)]^{1-t_a}
+
+
 
