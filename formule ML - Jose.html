@@ -1,14 +1,311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Note Jose ML</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Note Jose ML</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#section"
+id="toc-section"><!-- pandoc --toc --standalone --mathjax -f markdown -t html ".\formule ML - Jose.md" -o '.\formule ML - Jose.html' --></a></li>
+<li><a href="#machine-learning" id="toc-machine-learning">Machine
+learning</a>
+<ul>
+<li><a href="#definition-of-a-machine-learning-problem-and-its-goal"
+id="toc-definition-of-a-machine-learning-problem-and-its-goal">Definition
+of a machine learning problem and its goal</a></li>
+<li><a href="#probabilistic-framework"
+id="toc-probabilistic-framework">Probabilistic framework</a></li>
+<li><a href="#supervised-learning"
+id="toc-supervised-learning">Supervised Learning</a>
+<ul>
+<li><a href="#sample-error" id="toc-sample-error">Sample error</a></li>
+<li><a href="#true-error" id="toc-true-error">True Error</a></li>
+<li><a href="#overfitting" id="toc-overfitting">Overfitting</a></li>
+<li><a href="#overfitting-decision-trees"
+id="toc-overfitting-decision-trees">Overfitting Decision Trees</a></li>
+<li><a href="#bayesian-learning" id="toc-bayesian-learning">Bayesian
+learning</a></li>
+<li><a href="#maximum-a-posteriori-hypothesis"
+id="toc-maximum-a-posteriori-hypothesis">Maximum a Posteriori
+Hypothesis</a></li>
+<li><a href="#maximum-likelihood" id="toc-maximum-likelihood">Maximum
+Likelihood</a></li>
+<li><a href="#optimal-bayes-classifier"
+id="toc-optimal-bayes-classifier">Optimal Bayes Classifier</a></li>
+<li><a href="#naive-bayes-classifier"
+id="toc-naive-bayes-classifier">Naive Bayes classifier</a></li>
+<li><a href="#naive-bayes-as-approximation-of-the-obc"
+id="toc-naive-bayes-as-approximation-of-the-obc">Naive Bayes as
+approximation of the OBC</a></li>
+<li><a href="#document-classification"
+id="toc-document-classification">Document classification</a></li>
+<li><a href="#linear-regression" id="toc-linear-regression">Linear
+Regression</a></li>
+<li><a href="#logistic-regression" id="toc-logistic-regression">Logistic
+Regression</a></li>
+<li><a href="#gram-matrix" id="toc-gram-matrix">Gram Matrix</a></li>
+<li><a href="#definition-of-kernel"
+id="toc-definition-of-kernel">Definition of kernel</a></li>
+<li><a href="#kernel-trick" id="toc-kernel-trick">Kernel Trick</a></li>
+<li><a
+href="#determination-of-kernelized-version-for-linear-regression-without-regularization"
+id="toc-determination-of-kernelized-version-for-linear-regression-without-regularization">Determination
+of kernelized version for linear regression without
+regularization</a></li>
+<li><a
+href="#determination-of-kernelized-version-for-linear-regression-with-regularization"
+id="toc-determination-of-kernelized-version-for-linear-regression-with-regularization">Determination
+of kernelized version for linear regression with regularization</a></li>
+<li><a href="#generative-vs-discriminant-model"
+id="toc-generative-vs-discriminant-model">Generative vs Discriminant
+Model</a></li>
+<li><a href="#perceptron" id="toc-perceptron">Perceptron</a></li>
+<li><a href="#k-nn" id="toc-k-nn">K-NN</a></li>
+<li><a href="#svm" id="toc-svm">SVM</a></li>
+<li><a href="#kernelized-svm" id="toc-kernelized-svm">Kernelized
+SVM</a></li>
+<li><a href="#soft-margins" id="toc-soft-margins">Soft margins</a></li>
+<li><a href="#svm-for-regression" id="toc-svm-for-regression">SVM for
+regression</a></li>
+</ul></li>
+<li><a href="#unsupervised-learning"
+id="toc-unsupervised-learning">Unsupervised learning</a>
+<ul>
+<li><a href="#expectation-maximization"
+id="toc-expectation-maximization">Expectation Maximization</a></li>
+<li><a href="#gaussian-mixture-model"
+id="toc-gaussian-mixture-model">Gaussian Mixture Model</a></li>
+<li><a href="#mathematical-formulation-of-k-means"
+id="toc-mathematical-formulation-of-k-means">Mathematical formulation of
+K-Means</a></li>
+<li><a href="#intrinsic-dimension"
+id="toc-intrinsic-dimension">Intrinsic dimension</a></li>
+<li><a href="#pca" id="toc-pca">PCA</a></li>
+</ul></li>
+<li><a href="#reinforcment-learning"
+id="toc-reinforcment-learning">Reinforcment Learning</a>
+<ul>
+<li><a href="#problem-definition" id="toc-problem-definition">Problem
+definition</a></li>
+<li><a href="#markov-property" id="toc-markov-property">Markov
+property</a></li>
+<li><a href="#mdp" id="toc-mdp">MDP</a></li>
+<li><a href="#definition-of-k-bandit-problem"
+id="toc-definition-of-k-bandit-problem">Definition of K-Bandit
+problem</a></li>
+<li><a href="#q-learning" id="toc-q-learning">Q-Learning</a></li>
+<li><a href="#hmm" id="toc-hmm">HMM</a></li>
+<li><a href="#pomdp" id="toc-pomdp">POMDP</a></li>
+</ul></li>
+<li><a href="#neural-networks" id="toc-neural-networks">Neural
+Networks</a>
+<ul>
+<li><a href="#backpropagation"
+id="toc-backpropagation">Backpropagation</a></li>
+<li><a href="#sgd" id="toc-sgd">SGD</a></li>
+<li><a href="#architectural-designs"
+id="toc-architectural-designs">Architectural designs</a></li>
+<li><a href="#cnn" id="toc-cnn">CNN</a></li>
+<li><a href="#autoencoder" id="toc-autoencoder">Autoencoder</a></li>
+</ul></li>
+<li><a href="#general" id="toc-general">General</a>
+<ul>
+<li><a href="#difference-between-pca-and-autoencoder"
+id="toc-difference-between-pca-and-autoencoder">Difference between PCA
+and Autoencoder</a></li>
+<li><a href="#ensambles" id="toc-ensambles">Ensambles</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h2
+id="section"><!-- pandoc --toc --standalone --mathjax -f markdown -t html ".\formule ML - Jose.md" -o '.\formule ML - Jose.html' --></h2>
+<p>title: “Machine learning Notes” author: “José Manuel Del Valle
+Delgado, Valerio Belli” date: “18/01/2023” output: pdf_document:
+number_sections: yes toc: yes fig_caption: yes toc_depth: 2 fontsize:
+13pt fontFamily: lexend</p>
+<hr />
 <h1 id="machine-learning">Machine learning</h1>
 <h2
 id="definition-of-a-machine-learning-problem-and-its-goal">Definition of
 a machine learning problem and its goal</h2>
 <p>The general Machine Learning problem, we have to approximate a
-function <span
-class="math inline"><em>f</em> : <em>X</em> → <em>Y</em></span>, given a
-dataset <span class="math inline"><em>D</em></span> containing
-informations about <span class="math inline"><em>f</em></span>. The
-specific form of the datasets determines the category of ML problem that
-we want to solve.</p>
+function <span class="math inline">\(f:X \rightarrow Y\)</span>, given a
+dataset <span class="math inline">\(D\)</span> containing informations
+about <span class="math inline">\(f\)</span>. The specific form of the
+datasets determines the category of ML problem that we want to
+solve.</p>
 <h2 id="probabilistic-framework">Probabilistic framework</h2>
 <!-- https://dsp.stackexchange.com/questions/53128/why-is-random-noise-assumed-to-be-normally-distributed -->
 <p>A key thing that we have to keep in mind in the Machine Learning
@@ -20,31 +317,32 @@ probabilistic perspective helps us quantify and manipulate uncerntainty
 directly.</p>
 <h2 id="supervised-learning">Supervised Learning</h2>
 <p>In supervised learning, the dataset <span
-class="math inline"><em>D</em></span> comprises, of pairs of input
-output</p>
-<p><span
-class="math display"><em>D</em> = { &lt; <em>x</em>, <em>y</em> &gt; |<em>x</em> ∈ <em>X</em>, <em>y</em> ∈ <em>Y</em>}</span></p>
+class="math inline">\(D\)</span> comprises, of pairs of input output</p>
+<p><span class="math display">\[D = \{&lt;x,y&gt;|x \in X, y \in Y
+\}\]</span></p>
 <h3 id="sample-error">Sample error</h3>
 <p>The sample error represents the error that we make on instances
 present in the training set.</p>
-<p><span class="math display">$$\text{error}_S(h) = \frac{1}{n} \sum_{x
-\in S} \delta(f(x) \not ={h(x)})$$</span></p>
+<p><span class="math display">\[\text{error}_S(h) = \frac{1}{n} \sum_{x
+\in S} \delta(f(x) \neq {h(x)})\]</span></p>
 <h3 id="true-error">True Error</h3>
 <p>We assume that different instances of <span
-class="math inline"><em>X</em></span> presented to us in the dataset is
-drawn from an unknown distribution <span class="math inline">𝒟</span>.
-The true error is the error that the hypotesis make on any value choosen
-at random from <span class="math inline">𝒟</span>.</p>
-<p><span
-class="math display">error<sub><em>D</em></sub>(<em>h</em>) = <em>P</em><sub><em>x</em> ∈ <em>D</em></sub>(<em>f</em>(<em>x</em>)≠<em>h</em>(<em>x</em>))</span></p>
+class="math inline">\(X\)</span> presented to us in the dataset is drawn
+from an unknown distribution <span
+class="math inline">\(\mathcal{D}\)</span>. The true error is the error
+that the hypotesis make on any value choosen at random from <span
+class="math inline">\(\mathcal{D}\)</span>.</p>
+<p><span class="math display">\[\text{error}_D(h) = P_{x \in D}(f(x)
+\neq {h(x)})\]</span></p>
 <p>The true error is impossible to compute, but we can estimate it.</p>
 <h3 id="overfitting">Overfitting</h3>
-<p>Given a hypotheses space <span class="math inline"><em>H</em></span>,
-a hypotheses <span class="math inline"><em>h</em> ∈ <em>H</em></span>,
-is said to overfit the training data if there exists some <span
-class="math inline"><em>h</em>′ ∈ <em>H</em></span>, such that:</p>
-<p><span
-class="math display">error<sub><em>S</em></sub>(<em>h</em>) &lt; error<sub><em>S</em></sub>(<em>h</em>′) ∩ error<sub>𝒟</sub>(<em>h</em>) &gt; error<sub>𝒟</sub>(<em>h</em>′)</span></p>
+<p>Given a hypotheses space <span class="math inline">\(H\)</span>, a
+hypotheses <span class="math inline">\(h \in H\)</span>, is said to
+overfit the training data if there exists some <span
+class="math inline">\(h&#39; \in H\)</span>, such that:</p>
+<p><span class="math display">\[\text{error}_S(h) &lt;
+\text{error}_S(h&#39;) \cap \text{error}_{\mathcal{D}}(h) &gt;
+\text{error}_{\mathcal{D}}(h&#39;) \]</span></p>
 <p>Overfitting occurs when the hypotesis is too complex compared to the
 task it tries to solve.</p>
 <h3 id="overfitting-decision-trees">Overfitting Decision Trees</h3>
@@ -65,90 +363,79 @@ but there are a combination that are informative.</p>
 <p>The uncertainty is modeled in a bayesian framework. This means that
 our beliefs are updated as soon as new data is presented to us. The
 bayes theorem is as follows:</p>
-<p><span class="math display">$$P(A|B) =
-\frac{P(B|A)P(A)}{P(D)}$$</span></p>
-<p><span class="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span> is
-the called posterior, beacuse is the updated belief about <span
-class="math inline"><em>A</em></span> after taking into consideration
-the evidence, <span class="math inline"><em>B</em></span>. <span
-class="math inline"><em>P</em>(<em>B</em>|<em>A</em>)</span> is the
-likelihood and express how well the observed data supports our
-hypotesis. <span class="math inline"><em>P</em>(<em>A</em>)</span> is
-the prior, reflects the prior beliefs we had before evidence was
-presented to us.</p>
+<p><span class="math display">\[P(A|B) =
+\frac{P(B|A)P(A)}{P(D)}\]</span></p>
+<p><span class="math inline">\(P(A|B)\)</span> is the called posterior,
+beacuse is the updated belief about <span
+class="math inline">\(A\)</span> after taking into consideration the
+evidence, <span class="math inline">\(B\)</span>. <span
+class="math inline">\(P(B|A)\)</span> is the likelihood and express how
+well the observed data supports our hypotesis. <span
+class="math inline">\(P(A)\)</span> is the prior, reflects the prior
+beliefs we had before evidence was presented to us.</p>
 <h3 id="maximum-a-posteriori-hypothesis">Maximum a Posteriori
 Hypothesis</h3>
 <p>Is usual that a particular learning algorithm returns not a single
 hypotesis but a set of hypotesis. Our objective would be to determine
-the most probable hypotesis <span class="math inline"><em>h</em></span>
-given the data at hand <span class="math inline"><em>D</em></span>. In
-other word we would like to determine hypotesis that maximizes the
-posterior.</p>
-<p><span class="math display">$$h_{MAP} = \underset{h \in
-H}{\text{argmax}} P(h | D) \\$$</span> <span
-class="math display">$$\stackrel{(1)}{=} \underset{h \in
-H}{\text{argmax}} \frac{P(D|h)P(h)}{P(D)} \\$$</span> <span
-class="math display">$$\stackrel{(2)}{=} \underset{h \in
-H}{\text{argmax}}  {P(D|h)P(h)}$$</span></p>
+the most probable hypotesis <span class="math inline">\(h\)</span> given
+the data at hand <span class="math inline">\(D\)</span>. In other word
+we would like to determine hypotesis that maximizes the posterior.</p>
+<p><span class="math display">\[h_{MAP} = \underset{h \in
+H}{\text{argmax}} P(h | D) \]</span> <span
+class="math display">\[\stackrel{(1)}{=} \underset{h \in
+H}{\text{argmax}} \frac{P(D|h)P(h)}{P(D)} \]</span> <span
+class="math display">\[\stackrel{(2)}{=} \underset{h \in
+H}{\text{argmax}}  {P(D|h)P(h)}\]</span></p>
 <ol type="1">
 <li>Is given by Bayes Theorem.</li>
-<li>Is given by the fact that <span
-class="math inline"><em>P</em>(<em>D</em>)</span> is a constant and
-<span class="math inline">argmax</span> is invariant to constant
-multiplication.</li>
+<li>Is given by the fact that <span class="math inline">\(P(D)\)</span>
+is a constant and <span class="math inline">\(\text{argmax}\)</span> is
+invariant to constant multiplication.</li>
 </ol>
 <h3 id="maximum-likelihood">Maximum Likelihood</h3>
 <p>Assuming we know the prior probability of each hypotesis <span
-class="math inline"><em>h</em></span>, we can determine the most
-probable hypotesis by computing the <span
-class="math inline"><em>h</em><sub><em>M</em><em>A</em><em>P</em></sub></span>.
-However the knowledge of <span
-class="math inline"><em>P</em>(<em>h</em>)</span>, might not be
-available, thus we have no reason to think that a particular hypotesis
-must be preferred over another, so we model it as a uniform
-distribution, thus <span
-class="math inline"><em>P</em>(<em>h</em>)</span> can be ignored,
-because it becomes a constant value.</p>
-<p><span class="math display">$$h_{ML} =\underset{h \in
-H}{\text{argmax}} P(h \mid D) = \argmax P(D\mid h)$$</span></p>
+class="math inline">\(h\)</span>, we can determine the most probable
+hypotesis by computing the <span class="math inline">\(h_{MAP}\)</span>.
+However the knowledge of <span class="math inline">\(P(h)\)</span>,
+might not be available, thus we have no reason to think that a
+particular hypotesis must be preferred over another, so we model it as a
+uniform distribution, thus <span class="math inline">\(P(h)\)</span> can
+be ignored, because it becomes a constant value.</p>
+<p><span class="math display">\[h_{ML} =\underset{h \in
+H}{\text{argmax}} P(h \mid D) = \text{argmax} P(D\mid h)\]</span></p>
 <h3 id="optimal-bayes-classifier">Optimal Bayes Classifier</h3>
-<p>While the <span
-class="math inline"><em>h</em><sub><em>M</em><em>A</em><em>P</em></sub></span>
-is the most probable hypotesis, given the data, it’s classification
-might not be the most probable. The Bayes Optimal Classifier on the
-other hand classify each instance with its most probable value. The BOC,
-determines the most probable value by making a weighted sum of the
-probability of a specific value <span
-class="math inline"><em>v</em></span>, assuming that <span
-class="math inline"><em>h</em></span> is true, weighted by the
-probability of <span class="math inline"><em>h</em></span> being true
-given the data <span class="math inline"><em>D</em></span>.</p>
-<p><span class="math display">$$v_{obc} = \underset{h \in
-H}{\text{argmax}} \sum_{hi \in H} P(v | h)P(h | D)$$</span></p>
+<p>While the <span class="math inline">\(h_{MAP}\)</span> is the most
+probable hypotesis, given the data, it’s classification might not be the
+most probable. The Bayes Optimal Classifier on the other hand classify
+each instance with its most probable value. The BOC, determines the most
+probable value by making a weighted sum of the probability of a specific
+value <span class="math inline">\(v\)</span>, assuming that <span
+class="math inline">\(h\)</span> is true, weighted by the probability of
+<span class="math inline">\(h\)</span> being true given the data <span
+class="math inline">\(D\)</span>.</p>
+<p><span class="math display">\[v_{obc} = \underset{h \in
+H}{\text{argmax}} \sum_{hi \in H} P(v | h)P(h | D)\]</span></p>
 <p>The BOC, takes it’s name from the fact that under the same hypotesis
 space, and with the same a priori knowledge no other method outperforms
 it on average. It is, however, not practical in real situations, due to
 its computationally intensive nature.</p>
 <h3 id="naive-bayes-classifier">Naive Bayes classifier</h3>
 <p>The Naive Bayes Classifier is a practical algorithm. It can be used
-under the assumption that any value <span
-class="math inline"><em>v</em> ∈ <em>V</em></span>, where <span
-class="math inline"><em>V</em></span> is a finite set, that we want to
-compute, can be expressed as a conjunction of its attributes. Since
-every value can be described as a conjunction of its attributes, the
-naive Bayes algorithm determines <span
-class="math inline"><em>v</em><sub><em>m</em><em>a</em><em>p</em></sub></span>
-in the following way:</p>
-<p><span class="math display">$$v_{MAP} = \underset{h \in
-H}{\text{argmax}}  P(v | a_1, a_2, .... , a_n) \\$$</span></p>
-<p><span class="math display">$$\stackrel{(1)}{=} \underset{h \in
-H}{\text{argmax}} P( a_1, a_2, .... , a_n | v) \\$$</span> <span
-class="math display">$$\stackrel{(2)}{=} \underset{h \in
-H}{\text{argmax}} P(v) \prod_i P(a_i | v) \\$$</span></p>
+under the assumption that any value <span class="math inline">\(v \in
+V\)</span>, where <span class="math inline">\(V\)</span> is a finite
+set, that we want to compute, can be expressed as a conjunction of its
+attributes. Since every value can be described as a conjunction of its
+attributes, the naive Bayes algorithm determines <span
+class="math inline">\(v_{map}\)</span> in the following way:</p>
+<p><span class="math display">\[v_{MAP} = \underset{h \in
+H}{\text{argmax}}  P(v | a_1, a_2, .... , a_n) \]</span></p>
+<p><span class="math display">\[\stackrel{(1)}{=} \underset{h \in
+H}{\text{argmax}} P( a_1, a_2, .... , a_n | v) \]</span> <span
+class="math display">\[\stackrel{(2)}{=} \underset{h \in
+H}{\text{argmax}} P(v) \prod_i P(a_i | v) \]</span></p>
 <ol type="1">
 <li>Comes from the combined application of Bayes Theorem and that <span
-class="math inline"><em>P</em>(<em>a</em><sub>1</sub>,…,<em>a</em><sub><em>n</em></sub>)</span>
-is a constant.</li>
+class="math inline">\(P(a_1 , \ldots , a_n)\)</span> is a constant.</li>
 <li>Comes from the Independence assumption. The independence assumptions
 states that attributes values are conditionally independent given the
 target value.</li>
@@ -163,274 +450,281 @@ practical and effective classification algorithm, providing a
 computationally efficient way to approach the optimal Bayes classifier
 in situations where the independence assumption is reasonable.</p>
 <h3 id="document-classification">Document classification</h3>
-<p><span
-class="math display">doc<sub><em>i</em></sub> = {<em>a</em><em>b</em><em>s</em><em>t</em><em>r</em><em>a</em><em>c</em><em>t</em> ∪ <em>t</em><em>i</em><em>t</em><em>l</em><em>e</em> ∪ <em>a</em><em>u</em><em>t</em><em>h</em><em>o</em><em>r</em> ∪ <em>p</em><em>u</em><em>b</em><em>b</em><em>l</em><em>i</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>}</span></p>
+<p><span class="math display">\[\text{doc}_{i} = \{abstract \cup title
+\cup author \cup pubblication \}\]</span></p>
 <p>We can now set up a dataset vocabulary.</p>
 <p>So given a new doc doc_i we want to compute:</p>
-<p><span class="math display">$$\text{V}_{NB} = \argmax P(cj \mid D)
-\prod_{i=1}^{n} P(ai \mid cj, D)$$</span> <span class="math display">$$=
-\argmax P(cj \mid D) P(d \mid cj, D)$$</span></p>
+<p><span class="math display">\[\text{V}_{NB} = \text{argmax} P(cj \mid
+D) \prod_{i=1}^{n} P(ai \mid cj, D)\]</span> <span
+class="math display">\[= \text{argmax} P(cj \mid D) P(d \mid cj,
+D)\]</span></p>
 <p>We use an approaching bag of words (BoW) based on a multinomial
 distribution for multiclass problem.</p>
 <p>We represent a doc as a fixed-lenght feature vector d given that we
 have</p>
-<p><span
-class="math display"><em>d</em> =  &lt; <em>d</em>1, ..., <em>d</em><em>n</em>&gt;</span></p>
+<p><span class="math display">\[d = &lt;d1, ..., dn&gt;\]</span></p>
 <p>where d_i = k if word i occurs k time in doc_i</p>
 <p>So for each feature we compute:</p>
-<p><span class="math display">$$P(d|c_j, D) = \frac{n!}{d_1! \dots d_n!}
-\prod_{i=1}^{n} P(w_i|c_j, D)^{d_i} $$</span></p>
+<p><span class="math display">\[P(d|c_j, D) = \frac{n!}{d_1! \dots d_n!}
+\prod_{i=1}^{n} P(w_i|c_j, D)^{d_i} \]</span></p>
 <p>Maximum-likelihood solution:</p>
-<p><span class="math display">$$\hat{P}(w_i|c_j, D) =
+<p><span class="math display">\[\hat{P}(w_i|c_j, D) =
 \frac{\sum_{\text{doc} \in D} tf_{i,j} + \alpha}{\sum_{\text{doc} \in D}
-tf_j + \alpha \cdot |V|} $$</span></p>
+tf_j + \alpha \cdot |V|} \]</span></p>
 <p>dove:</p>
 <ol type="1">
-<li><span class="math display">$$\text{tf}_{i,j} : \text{numero di
+<li><span class="math display">\[\text{tf}_{i,j} : \text{numero di
 occorrenze di \( w_i \) nel documento doc della classe \( c_j
-\)}.$$</span></li>
-<li><span class="math display">$$\text{tf}_{j} : \text{frequenza di
+\)}.\]</span></li>
+<li><span class="math display">\[\text{tf}_{j} : \text{frequenza di
 tutti i termini del documento \( \text{doc} \) della classe \( c_j
-\)}.$$</span></li>
-<li><span class="math display"><em>α</em>: parametro di
-smoothing.</span></li>
+\)}.\]</span></li>
+<li><span class="math display">\[\alpha\text{: parametro di
+smoothing}.\]</span></li>
 </ol>
 <h3 id="linear-regression">Linear Regression</h3>
 <p>Given:</p>
-<p><span class="math display">$$y(x,\bold{w}) = w_0 + w_1x_1 + ... +
-w_dx_d = \bold{w}^Tx$$</span></p>
+<p><span class="math display">\[y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ...
++ w_dx_d = \boldsymbol{w}^Tx\]</span></p>
 <p>Due to noise, we can say that:</p>
-<p><span class="math display">$$t = y(x,\bold{w}) +
-\epsilon$$</span></p>
-<p>The optimal value of <span class="math inline">$\bold{w}$</span> can
-be determined using a maximum likelihood approach. Assuming <span
-class="math inline"><em>ϵ</em></span> is Gaussian error, and that
+<p><span class="math display">\[t = y(x,\boldsymbol{w}) +
+\epsilon\]</span></p>
+<p>The optimal value of <span
+class="math inline">\(\boldsymbol{w}\)</span> can be determined using a
+maximum likelihood approach. Assuming <span
+class="math inline">\(\epsilon\)</span> is Gaussian error, and that
 observations are i.i.d we can define the likelihood function of <span
-class="math inline">$\bold{t}$</span> as:</p>
-<p><span class="math display">$$P( \bold{t} \mid \bold{x}, \bold{w},
-\beta) = \prod_{i=1}^{n} N(t_i\mid y(x_i,\bold{w}),
-\beta^{-1})$$</span></p>
+class="math inline">\(\boldsymbol{t}\)</span> as:</p>
+<p><span class="math display">\[P( \boldsymbol{t} \mid \boldsymbol{x},
+\boldsymbol{w}, \beta) = \prod_{i=1}^{n} N(t_i\mid
+y(x_i,\boldsymbol{w}), \beta^{-1})\]</span></p>
 <p>Insted of maximizing this quantity we can maximize the log
 likelihood:</p>
-<p><span class="math display">$$\underset{\bold{w}}{\text{argmax}}(
-\log( P( \bold{t} \mid \bold{x}, w, \beta)))  \\$$</span> <span
-class="math display">$$= \underset{\bold{w}}{\text{argmax}} (\frac{N}{2}
-\log {\beta} - \frac{N}{2}\log (2\pi) - \beta
-E_D(\bold{w}))$$</span></p>
-<p><span class="math display">$$\stackrel{(1)}{=}
-\underset{\bold{w}}{\text{argmax}} (E_D(\bold{w}))$$</span> <span
-class="math display">$$\stackrel{(2)}{=}
-\underset{\bold{w}}{\text{argmin}} (E_D(\bold{w}))$$</span></p>
+<p><span
+class="math display">\[\underset{\boldsymbol{w}}{\text{argmax}}( \log(
+P( \boldsymbol{t} \mid \boldsymbol{x}, w, \beta)))  \]</span> <span
+class="math display">\[= \underset{\boldsymbol{w}}{\text{argmax}}
+(\frac{N}{2} \log {\beta} - \frac{N}{2}\log (2\pi) - \beta
+E_D(\boldsymbol{w}))\]</span></p>
+<p><span class="math display">\[\stackrel{(1)}{=}
+\underset{\boldsymbol{w}}{\text{argmax}} (E_D(\boldsymbol{w}))\]</span>
+<span class="math display">\[\stackrel{(2)}{=}
+\underset{\boldsymbol{w}}{\text{argmin}}
+(E_D(\boldsymbol{w}))\]</span></p>
 <ol type="1">
 <li>Comes from the fact that argmax is invariant to constant addition
 and multiplication.</li>
 <li>Come from the fact that maximization of the log likelihood is
 equivalent to the minimization of negative log likelihood. Where</li>
 </ol>
-<p><span class="math display">$$E_d(\bold{w}) = \frac{1}{2}
-\sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2$$</span></p>
+<p><span class="math display">\[E_d(\boldsymbol{w}) = \frac{1}{2}
+\sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2\]</span></p>
 <p>In order to find the minimum we need to differentiate:</p>
-<p><span class="math display">$$\nabla E_d(\bold{w}) = \sum_{i=1}^{N}
-(t_i - \bold{w}^T x_i)x_i^T$$</span></p>
+<p><span class="math display">\[\nabla E_d(\boldsymbol{w}) =
+\sum_{i=1}^{N} (t_i - \boldsymbol{w}^T x_i)x_i^T\]</span></p>
 <p>setting to zero:</p>
-<p><span class="math display">$$0 = \sum_{i=1}^{N} t_ix_i^T - \bold{w}^T
-(\sum_{i=1}^{N}{x_{i}x_{i}^T})$$</span></p>
+<p><span class="math display">\[0 = \sum_{i=1}^{N} t_ix_i^T -
+\boldsymbol{w}^T (\sum_{i=1}^{N}{x_{i}x_{i}^T})\]</span></p>
 <p>Gives us the maximum likely solution, which can be written in closed
 form.</p>
-<p><span class="math display">$$\bold{w}_{ML} =
-(\bold{X}^T\bold{X})^{-1} \bold{X}^T \bold{t} $$</span></p>
+<p><span class="math display">\[\boldsymbol{w}_{ML} =
+(\boldsymbol{X}^T\boldsymbol{X})^{-1} \boldsymbol{X}^T \boldsymbol{t}
+\]</span></p>
 <p>Determining the optimal values using the closed form can be costly,
 due to the fact that, it needs to process the entire dataset. We can
 define an iterative approach, by updating the weights based on a subset
 (mini batch) or only a single element (sequential) through the following
 learning rule.</p>
-<p><span class="math display">$$\bold{w} ^{\tau} \leftarrow
-\bold{w}^{\tau - 1} - \eta \nabla{E_n}$$</span></p>
-<p>Where <span
-class="math inline"><em>E</em><sub><em>n</em></sub></span> is the error
-averaged over the subset.</p>
+<p><span class="math display">\[\boldsymbol{w} ^{\tau} \leftarrow
+\boldsymbol{w}^{\tau - 1} - \eta \nabla{E_n}\]</span></p>
+<p>Where <span class="math inline">\(E_n\)</span> is the error averaged
+over the subset.</p>
 <h3 id="logistic-regression">Logistic Regression</h3>
 <p>Utilizing as a functional form, the GLM we can model the class
 conditional probbailities and our model as follow:</p>
-<p><span class="math display">$$P(C_1 \mid \bold{x}) = y(\bold{x}) =
-\sigma(\bold{w}^T\bold{x})$$</span> <span class="math display">$$P(C_2
-\mid \bold{x}) = 1 - P(C_1 \mid \bold{x})$$</span></p>
+<p><span class="math display">\[P(C_1 \mid \boldsymbol{x}) =
+y(\boldsymbol{x}) = \sigma(\boldsymbol{w}^T\boldsymbol{x})\]</span>
+<span class="math display">\[P(C_2 \mid \boldsymbol{x}) = 1 - P(C_1 \mid
+\boldsymbol{x})\]</span></p>
 <p>we can express the likelihood as</p>
-<p><span class="math display">$$P(\bold{t} \mid \bold{w}) =
+<p><span class="math display">\[P(\boldsymbol{t} \mid \boldsymbol{w}) =
 \prod_{n=1}^{N}
-y(\bold{x}_n)^{t_n}(1-y(\bold{x}_n))^{1-t_n}$$</span></p>
+y(\boldsymbol{x}_n)^{t_n}(1-y(\boldsymbol{x}_n))^{1-t_n}\]</span></p>
 <p>Since the logarithm is a non monotonic function, we can use the
 maximum likelihood approach and determine the optimal values by choosing
-<span class="math inline">$\bold{w}^*$</span> as the <span
-class="math inline">$\bold{w}$</span> that maximizes the log likelihood.
-Also since maximizing a function is the same thing as minimizing
-negative:</p>
-<p><span class="math display">$$- \underset{\bold{w}}{\text{argmin}}
-(\ln P(\bold{t} \mid \bold{w})) = -\sum_{n = 1}^{N} [t_n \ln
-y(\bold{x}_n) + (1-t_n)\ln (1-y(\bold{x}_n))] = E(\bold{w})$$</span></p>
+<span class="math inline">\(\boldsymbol{w}^*\)</span> as the <span
+class="math inline">\(\boldsymbol{w}\)</span> that maximizes the log
+likelihood. Also since maximizing a function is the same thing as
+minimizing negative:</p>
+<p><span class="math display">\[-
+\underset{\boldsymbol{w}}{\text{argmin}} (\ln P(\boldsymbol{t} \mid
+\boldsymbol{w})) = -\sum_{n = 1}^{N} [t_n \ln y(\boldsymbol{x}_n) +
+(1-t_n)\ln (1-y(\boldsymbol{x}_n))] = E(\boldsymbol{w})\]</span></p>
 <p>Which is the negative cross entropy.</p>
 <h3 id="gram-matrix">Gram Matrix</h3>
-<p>A Gram Matrix is an <span
-class="math inline"><em>N</em> × <em>N</em></span> symmetric matrix with
-elements:</p>
-<p><span
-class="math display"><em>K</em><em>n</em><em>m</em> = <em>x</em><sub><em>n</em></sub><sup><em>T</em></sup><em>x</em><sub><em>m</em></sub> = <em>K</em>(<em>x</em><em>n</em>,<em>x</em><em>m</em>)</span>
-<span class="math display">$$
+<p>A Gram Matrix is an <span class="math inline">\(N \times N\)</span>
+symmetric matrix with elements:</p>
+<p><span class="math display">\[Knm = x_{n}^Tx_{m} = K(xn,xm)\]</span>
+<span class="math display">\[
 K = \begin{bmatrix}
     K(x_1, x_1) &amp; K(x_1, x_2) &amp; \cdots &amp; K(x_1, x_n) \\
     K(x_2, x_1) &amp; K(x_2, x_2) &amp; \cdots &amp; K(x_2, x_n) \\
     \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
     K(x_n, x_1) &amp; K(x_n, x_2) &amp; \cdots &amp; K(x_n, x_n)
 \end{bmatrix}
-$$</span> The entries of the Gram matrix correspond to the pairwise
+\]</span> The entries of the Gram matrix correspond to the pairwise
 similarities between data points, and this matrix is employed to compute
 decision boundaries in the transformed feature space.</p>
 <h3 id="definition-of-kernel">Definition of kernel</h3>
-<p><span class="math inline"><em>k</em></span> is a kernel function
-defined as a real-valued function, simmetric and non negative. <span
-class="math inline"><em>k</em>(<em>x</em>,<em>x</em>′)</span> with <span
-class="math inline"><em>x</em>, <em>x</em>′ ∈ <em>X</em></span> defines
-similarity measure between instances <span
-class="math inline"><em>x</em></span> and <span
-class="math inline"><em>x</em>′</span>.</p>
+<p><span class="math inline">\(k\)</span> is a kernel function defined
+as a real-valued function, simmetric and non negative. <span
+class="math inline">\(k(x,x&#39;)\)</span> with <span
+class="math inline">\(x,x&#39; \in X\)</span> defines similarity measure
+between instances <span class="math inline">\(x\)</span> and <span
+class="math inline">\(x&#39;\)</span>.</p>
 <h3 id="kernel-trick">Kernel Trick</h3>
-<p>If an input vector <span class="math inline">$\bold{x}$</span>,
-appers in an algorithm only as an inner product <span
-class="math inline"><em>x</em><sup><em>T</em></sup><em>x</em>′</span>,
+<p>If an input vector <span
+class="math inline">\(\boldsymbol{x}\)</span>, appers in an algorithm
+only as an inner product <span class="math inline">\(x^Tx&#39;\)</span>,
 then the inner product can be replaced with some kernel function <span
-class="math inline"><em>k</em>(<em>x</em>,<em>x</em>′)</span></p>
+class="math inline">\(k(x,x&#39;)\)</span></p>
 <h3
 id="determination-of-kernelized-version-for-linear-regression-without-regularization">Determination
 of kernelized version for linear regression without regularization</h3>
 <p>Given a linear model</p>
-<p><span class="math display">$$y(x,\bold{w}) = w_0 + w_1x_1 + ... +
-w_dx_d = \bold{w}^Tx$$</span></p>
+<p><span class="math display">\[y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ...
++ w_dx_d = \boldsymbol{w}^Tx\]</span></p>
 <p>We know, by using the maximum likely approach that a suitable error
 function, is the least square error</p>
-<p><span class="math display">$$E_d(\bold{w}) = \frac{1}{2}
-\sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2$$</span></p>
-<p>By setting it to <span class="math inline">0</span> we get the closed
-form of <span class="math inline">$\bold{w}^*$</span>:</p>
-<p><span class="math display">$$\bold{w}^* =
-(\bold{X}{\bold{X}^T})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T =
-\sum_{n=1}^{N} \alpha_nx_n $$</span></p>
-<p>Were <span class="math inline"><em>α</em></span> is defined as <span
-class="math inline">$\bold{K}^{-1}\bold{t}$</span> and <span
-class="math inline">$\bold{K}$</span> is the Gram matrix. Putting <span
-class="math inline">$\bold{w}^*$</span> back into the model we
-obtain:</p>
-<p><span class="math display">$$y(x,\bold{w}^*) = \bold{w}^{*^T}x =
-(\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$</span></p>
+<p><span class="math display">\[E_d(\boldsymbol{w}) = \frac{1}{2}
+\sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2\]</span></p>
+<p>By setting it to <span class="math inline">\(0\)</span> we get the
+closed form of <span
+class="math inline">\(\boldsymbol{w}^*\)</span>:</p>
+<p><span class="math display">\[\boldsymbol{w}^* =
+(\boldsymbol{X}{\boldsymbol{X}^T})^{-1}\boldsymbol{X}^T\boldsymbol{t} =
+\alpha \boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_nx_n \]</span></p>
+<p>Were <span class="math inline">\(\alpha\)</span> is defined as <span
+class="math inline">\(\boldsymbol{K}^{-1}\boldsymbol{t}\)</span> and
+<span class="math inline">\(\boldsymbol{K}\)</span> is the Gram matrix.
+Putting <span class="math inline">\(\boldsymbol{w}^*\)</span> back into
+the model we obtain:</p>
+<p><span class="math display">\[y(x,\boldsymbol{w}^*) =
+\boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N
+\alpha_nx_n^Tx \]</span></p>
 <p>By using the kernel trick:</p>
-<p><span class="math display">$$y(x,\bold{w}^*) =  \sum_{n=1}^N
-\alpha_nk(x_n,x) $$</span></p>
+<p><span class="math display">\[y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N
+\alpha_nk(x_n,x) \]</span></p>
 <h3
 id="determination-of-kernelized-version-for-linear-regression-with-regularization">Determination
 of kernelized version for linear regression with regularization</h3>
 <p>Given a linear model</p>
-<p><span class="math display">$$y(x,\bold{w}) = w_0 + w_1x_1 + ... +
-w_dx_d = \bold{w}^Tx$$</span></p>
+<p><span class="math display">\[y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ...
++ w_dx_d = \boldsymbol{w}^Tx\]</span></p>
 <p>We know, by using the maximum likely approach that a suitable error
 function, is the least square error</p>
-<p><span class="math display">$$E_d(\bold{w}) = \frac{1}{2}
-\sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2 + \lambda
-||\bold{w}||^2$$</span></p>
-<p>Where <span class="math inline"><em>λ</em></span> is a regularization
-term that controls the model complexity. By setting it to <span
-class="math inline">0</span> we get the closed form of <span
-class="math inline">$\bold{w}^*$</span>:</p>
-<p><span class="math display">$$\bold{w}^* = (\bold{X}{\bold{X}^T}
-+\lambda \bold{I_n})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T =
-\sum_{n=1}^{N} \alpha_nx_n $$</span></p>
-<p>Were <span class="math inline">$\bold{\alpha}$</span> is defined as
-<span class="math inline">$(\bold{K}+\lambda
-\bold{I_n})^{-1}\bold{t}$</span> and <span
-class="math inline">$\bold{K}$</span> is the Gram matrix. Putting <span
-class="math inline">$\bold{w}^*$</span> back into the model we
-obtain:</p>
-<p><span class="math display">$$y(x,\bold{w}^*) = \bold{w}^{*^T}x =
-(\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$</span></p>
+<p><span class="math display">\[E_d(\boldsymbol{w}) = \frac{1}{2}
+\sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2 + \lambda
+||\boldsymbol{w}||^2\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> is a
+regularization term that controls the model complexity. By setting it to
+<span class="math inline">\(0\)</span> we get the closed form of <span
+class="math inline">\(\boldsymbol{w}^*\)</span>:</p>
+<p><span class="math display">\[\boldsymbol{w}^* =
+(\boldsymbol{X}{\boldsymbol{X}^T} +\lambda
+\boldsymbol{I_n})^{-1}\boldsymbol{X}^T\boldsymbol{t} = \alpha
+\boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_nx_n \]</span></p>
+<p>Were <span class="math inline">\(\boldsymbol{\alpha}\)</span> is
+defined as <span class="math inline">\((\boldsymbol{K}+\lambda
+\boldsymbol{I_n})^{-1}\boldsymbol{t}\)</span> and <span
+class="math inline">\(\boldsymbol{K}\)</span> is the Gram matrix.
+Putting <span class="math inline">\(\boldsymbol{w}^*\)</span> back into
+the model we obtain:</p>
+<p><span class="math display">\[y(x,\boldsymbol{w}^*) =
+\boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N
+\alpha_nx_n^Tx \]</span></p>
 <p>By using the kernel trick:</p>
-<p><span class="math display">$$y(x,\bold{w}^*) =  \sum_{n=1}^N
-\alpha_nk(x_n,x) $$</span></p>
+<p><span class="math display">\[y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N
+\alpha_nk(x_n,x) \]</span></p>
 <h3 id="generative-vs-discriminant-model">Generative vs Discriminant
 Model</h3>
 <p>In a probabilistic framework the joint probability <span
-class="math inline">$P(\bold{x}\bold{t})$</span> gives us the most
-complete information. However determining it directly is often an
-unfeasible task. We can then use two different approaches. A generative
-approach aims to understand how data is generated, it does so by
-learning the class conditional densities of each class <span
-class="math inline"><em>P</em>(<em>x</em>∣<em>C</em><sub><em>k</em></sub>)</span>,
-the prior <span
-class="math inline"><em>P</em>(<em>C</em><sub><em>k</em></sub>)</span>,
-and then determining the posterior <span class="math inline">$P(C_k \mid
-\bold{x})$</span>.</p>
+class="math inline">\(P(\boldsymbol{x}\boldsymbol{t})\)</span> gives us
+the most complete information. However determining it directly is often
+an unfeasible task. We can then use two different approaches. A
+generative approach aims to understand how data is generated, it does so
+by learning the class conditional densities of each class <span
+class="math inline">\(P(x\mid C_k)\)</span>, the prior <span
+class="math inline">\(P(C_k)\)</span>, and then determining the
+posterior <span class="math inline">\(P(C_k \mid
+\boldsymbol{x})\)</span>.</p>
 <p>A discriminative approach are interessed in determining the decision
 boundary. This can be done in a probabilistic way, for example linear
 regression uses the form of the class conditional probability <span
-class="math inline"><em>P</em>(<em>C</em><sub><em>k</em></sub>∣<em>x</em>)</span>
-of the Generalized linear models and find the best parameters by using a
-maximum likelihood approach. Another approach is to directly determine
-de decision boundary without manipulating explicitly probabilities.</p>
+class="math inline">\(P(C_k \mid x)\)</span> of the Generalized linear
+models and find the best parameters by using a maximum likelihood
+approach. Another approach is to directly determine de decision boundary
+without manipulating explicitly probabilities.</p>
 <h3 id="perceptron">Perceptron</h3>
 <p>The perceptron is a simple binary classification algorithm, designed
 to mimic the way a biological neuron works. The model coreresponds to a
 linear combination of the inputs, that are then passed to a function
-<span class="math inline"><em>o</em></span> <span
-class="math display">$$y(\bold{x},\bold{w}) = o(\bold{w}^T\bold{x})
-$$</span></p>
-<p>The <span class="math inline"><em>o</em></span> function is just the
-sign function</p>
-<p><span class="math display">$$
+<span class="math inline">\(o\)</span> <span
+class="math display">\[y(\boldsymbol{x},\boldsymbol{w}) =
+o(\boldsymbol{w}^T\boldsymbol{x}) \]</span></p>
+<p>The <span class="math inline">\(o\)</span> function is just the sign
+function</p>
+<p><span class="math display">\[
 o(\mathbf{x}) =\text{sign}(\mathbf{w}^T\mathbf{x})=
 \begin{cases}
 1 &amp; \text{if } \mathbf{w}^T\mathbf{x} &gt; 0 \\
 -1 &amp; \text{otherwise}
 \end{cases}
-$$</span></p>
+\]</span></p>
 <p>This function however is piecewise and thus not differentiable, this
 means that in order to find the optimal values of <span
-class="math inline">$\bold{w}$</span> we need to define an alternative
-method, called perceptron critetion. The output of the sign function is
-either <span class="math inline"> − 1</span> or <span
-class="math inline">1</span>, thus a condition that must be satisfied is
-<span class="math inline">$\bold{w}^T\bold{x}_i\bold{t}_i &gt;
-0$</span>. The perceptron criterion aissngs <span
-class="math inline">0</span> to any pattern correctly classifiedand tris
-to minimize the following error function:</p>
-<p><span class="math display">$$E(\bold{w})= - \sum_{n \in \mathcal{M}}
-\bold{w}\bold{x}_n \bold{t}_n$$</span></p>
-<p>where <span class="math inline">ℳ</span> is the set of misclassified
-examples. It optimizes <span class="math inline">$E(\bold{w})$</span>
-using SGD. According to the perceptron convergence theorem we know that
-if the data is linearly separable and the learning rate <span
-class="math inline"><em>η</em></span> is chosen corretly the algorithm
-is guaranteed to finda solution in a finite amount of steps, this
-however does not guarantees that the time is acceptable. The initial set
-of weights is choosen at random, meaning that at the beginning we are
-most certainly in a bad situation, however if we choose a learning rate
-small enough we are guaranteed to improve our situation. The problem is
-that in a linearly separable dataset, there may exist an infinite number
-of solutions, and since the movement is slow, due to the learning rate
-is probable that we get a decision boundary near the data points,
-leading to a decision boundary with poor generalization
-performances.</p>
+class="math inline">\(\boldsymbol{w}\)</span> we need to define an
+alternative method, called perceptron critetion. The output of the sign
+function is either <span class="math inline">\(-1\)</span> or <span
+class="math inline">\(1\)</span>, thus a condition that must be
+satisfied is <span
+class="math inline">\(\boldsymbol{w}^T\boldsymbol{x}_i\boldsymbol{t}_i
+&gt; 0\)</span>. The perceptron criterion aissngs <span
+class="math inline">\(0\)</span> to any pattern correctly classifiedand
+tris to minimize the following error function:</p>
+<p><span class="math display">\[E(\boldsymbol{w})= - \sum_{n \in
+\mathcal{M}} \boldsymbol{w}\boldsymbol{x}_n
+\boldsymbol{t}_n\]</span></p>
+<p>where <span class="math inline">\(\mathcal{M}\)</span> is the set of
+misclassified examples. It optimizes <span
+class="math inline">\(E(\boldsymbol{w})\)</span> using SGD. According to
+the perceptron convergence theorem we know that if the data is linearly
+separable and the learning rate <span
+class="math inline">\(\eta\)</span> is chosen corretly the algorithm is
+guaranteed to finda solution in a finite amount of steps, this however
+does not guarantees that the time is acceptable. The initial set of
+weights is choosen at random, meaning that at the beginning we are most
+certainly in a bad situation, however if we choose a learning rate small
+enough we are guaranteed to improve our situation. The problem is that
+in a linearly separable dataset, there may exist an infinite number of
+solutions, and since the movement is slow, due to the learning rate is
+probable that we get a decision boundary near the data points, leading
+to a decision boundary with poor generalization performances.</p>
 <h3 id="k-nn">K-NN</h3>
 <p>KNN is a non parametric model that uses an instance based approach.
 In KNN the instances of the dataset are the parameters, thus KNN has a
 variable number of parameters, this mean that there is no training
 phase, but also that it requires a lot of memory because to make a
 prediction we need the entire subset. Given a new instance <span
-class="math inline">$\bold{x}$</span>, a value <span
-class="math inline"><em>k</em></span> and a distance metric the
+class="math inline">\(\boldsymbol{x}\)</span>, a value <span
+class="math inline">\(k\)</span> and a distance metric the
 classification value is chosen as follow:</p>
 <ul>
 <li>Find K-Nearest neighbors of <span
-class="math inline">$\bold{x}$</span>, according to the distance
+class="math inline">\(\boldsymbol{x}\)</span>, according to the distance
 metric</li>
-<li>Assign to <span class="math inline"><em>x</em></span> the most
-common class among the k-nearest neighbors</li>
+<li>Assign to <span class="math inline">\(x\)</span> the most common
+class among the k-nearest neighbors</li>
 </ul>
 <h3 id="svm">SVM</h3>
 <p>The Support Vector Machines makes classification using the maximum
@@ -445,13 +739,16 @@ lowe generalization error also means that SVM are less prone to
 overfitting.</p>
 <h3 id="kernelized-svm">Kernelized SVM</h3>
 <p>Given the maximum margin hyper plane, classification new instance
-<span class="math inline">$\bold{x}'$</span> is performed using by</p>
-<p><span class="math display">$$y(\bold{x}') = \text{sign}( w_0^* +
-\sum_{k, x_k\in SV} a_k^*t_{k} \bold{x}'^T \bold{x}_k )$$</span></p>
+<span class="math inline">\(\boldsymbol{x}&#39;\)</span> is performed
+using by</p>
+<p><span class="math display">\[y(\boldsymbol{x}&#39;) = \text{sign}(
+w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} \boldsymbol{x}&#39;^T
+\boldsymbol{x}_k )\]</span></p>
 <p>But since the input vector, is present only as inner product we can
 the condition to use the kernel trick is met and we can rewrite as</p>
-<p><span class="math display">$$y(\bold{x}') = \text{sign}( w_0^* +
-\sum_{k, x_k\in SV} a_k^*t_{k} k(\bold{x}'^T, \bold{x}_k) )$$</span></p>
+<p><span class="math display">\[y(\boldsymbol{x}&#39;) = \text{sign}(
+w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} k(\boldsymbol{x}&#39;^T,
+\boldsymbol{x}_k) )\]</span></p>
 <h3 id="soft-margins">Soft margins</h3>
 <p>If the dataset is not perfectly linearly separable, class conditional
 distributions may overlap and SVM will result in poor generalization. We
@@ -460,7 +757,7 @@ intuitive to understand that, misclassified points are points that are
 on the wrong side of the decision boundary. Another intuitive thing is
 that the farther from the decision boundary the point is, the worst its
 classification. We formalize this concept through the we introduction of
-slack variables <span class="math inline"><em>ξ</em></span>. Slack
+slack variables <span class="math inline">\(\xi\)</span>. Slack
 variables mark a penalty that increases as the distance from the
 decision boundary grows.</p>
 <h3 id="svm-for-regression">SVM for regression</h3>
@@ -469,35 +766,34 @@ specifically in supervised regression problems, we know we have to deal
 with noise. Thus if we make a model we know that is possible that the
 error we make is non zero. We express this concept utilizing the
 following error function:</p>
-<p><span class="math display">$$J(w, C) = C \sum_{i=1}^{N}
-L_{\epsilon}(t_i, y_i) + \frac{1}{2} \| w \|^2$$</span></p>
-<p>In which the term <span
-class="math inline"><em>L</em><sub><em>ϵ</em></sub></span> is called
-<span class="math inline"><em>ϵ</em></span>-insensitive error
-function:</p>
-<p><span class="math display">$$
+<p><span class="math display">\[J(w, C) = C \sum_{i=1}^{N}
+L_{\epsilon}(t_i, y_i) + \frac{1}{2} \| w \|^2\]</span></p>
+<p>In which the term <span class="math inline">\(L_{\epsilon}\)</span>
+is called <span class="math inline">\(\epsilon\)</span>-insensitive
+error function:</p>
+<p><span class="math display">\[
 L_{\epsilon}(t, y) =
 \begin{cases}
 0 &amp; \text{se } |t-y|&lt;\epsilon \\
 |t-y|-\epsilon &amp; \text{else}
 \end{cases}
-$$</span></p>
+\]</span></p>
 <p>The result of using the <span
-class="math inline"><em>ϵ</em></span>-insensitive error is that there is
-an immaginary tube, called <span
-class="math inline"><em>ϵ</em></span>-tube in which the predictions are
-assumed correct. The problem is that <span
-class="math inline"><em>ϵ</em></span>-insensitive error function is
+class="math inline">\(\epsilon\)</span>-insensitive error is that there
+is an immaginary tube, called <span
+class="math inline">\(\epsilon\)</span>-tube in which the predictions
+are assumed correct. The problem is that <span
+class="math inline">\(\epsilon\)</span>-insensitive error function is
 piecewise linear and thus not differentiable. We can solve this problem
 by introducing two slack variables <span
-class="math inline"><em>ξ</em></span> and <span
-class="math inline"><em>ξ̂</em></span> which represents how much we
-sthrive from the <span class="math inline"><em>ϵ</em></span>-tube.
-Constraining <span class="math inline"><em>ξ</em> ≥ 0</span> and <span
-class="math inline"><em>ξ̂</em> ≥ 0</span> we can reexpress the oerror
-function as</p>
-<p><span class="math display">$$J(w, C) = C \sum_{i=1}^{N} (\xi_n+
-\hat{\xi}_n) + \frac{1}{2} \| w \|^2$$</span></p>
+class="math inline">\(\xi\)</span> and <span
+class="math inline">\(\hat{\xi}\)</span> which represents how much we
+sthrive from the <span class="math inline">\(\epsilon\)</span>-tube.
+Constraining <span class="math inline">\(\xi \geq 0\)</span> and <span
+class="math inline">\(\hat{\xi}\geq 0\)</span> we can reexpress the
+oerror function as</p>
+<p><span class="math display">\[J(w, C) = C \sum_{i=1}^{N} (\xi_n+
+\hat{\xi}_n) + \frac{1}{2} \| w \|^2\]</span></p>
 <p>Which can be minimized</p>
 <h2 id="unsupervised-learning">Unsupervised learning</h2>
 <h3 id="expectation-maximization">Expectation Maximization</h3>
@@ -523,71 +819,66 @@ unimodal (has one maximum) it may not be a good fit for specific
 problems. We can extend the Gaussian distribution with the concept of
 mixture distribution or more specifically Gaussian Mixture Models. We
 can define a GMM as a linear superposition of <span
-class="math inline"><em>K</em></span> Gaussian</p>
-<p><span class="math display">$$P(\bold{x}) = \sum_{k=1}^{K}
-\pi_{k}\mathcal{N}(x \mid \mu_{k}, \Sigma_{k})$$</span></p>
-<p>Where <span
-class="math inline"><em>π</em><sub><em>k</em></sub></span> is called
-mixing coeffient and can be thought of the prior probability of picking
-the point from the <span class="math inline"><em>k</em></span>-th
-Gaussian. And <span
-class="math inline"><em>μ</em><sub><em>k</em></sub></span> and <span
-class="math inline"><em>Σ</em><sub><em>k</em></sub></span> are the mean
-and covariance for the <span class="math inline"><em>k</em></span>-th
-Gaussian.</p>
+class="math inline">\(K\)</span> Gaussian</p>
+<p><span class="math display">\[P(\boldsymbol{x}) = \sum_{k=1}^{K}
+\pi_{k}\mathcal{N}(x \mid \mu_{k}, \Sigma_{k})\]</span></p>
+<p>Where <span class="math inline">\(\pi_k\)</span> is called mixing
+coeffient and can be thought of the prior probability of picking the
+point from the <span class="math inline">\(k\)</span>-th Gaussian. And
+<span class="math inline">\(\mu_k\)</span> and <span
+class="math inline">\(\Sigma_k\)</span> are the mean and covariance for
+the <span class="math inline">\(k\)</span>-th Gaussian.</p>
 <p>The form of the GM distribution is governed by the parameters, one
 way to set them is through the maximum likelihood approach, however due
 to the summation of gaussians is not possible to write a solution in
 closed form and the solution is determined through the EM algorithm.</p>
 <p>When visualizing this parameters it might be useful to remember that
-the variance of a gaussian <span class="math inline"><em>Σ</em></span>
-can be expressed in its <span class="math inline"><em>D</em></span>
+the variance of a gaussian <span class="math inline">\(\Sigma\)</span>
+can be expressed in its <span class="math inline">\(D\)</span>
 components as follow:</p>
-<p><span class="math display">$$\Sigma = \sum_i=1^D
-\lambda_i\bold{u}_i\bold{u}_i^T$$</span></p>
-<p>Where <span
-class="math inline"><em>λ</em><sub><em>i</em></sub></span> are the eigen
-values of <span class="math inline"><em>Σ</em></span> <img
+<p><span class="math display">\[\Sigma = \sum_i=1^D
+\lambda_i\boldsymbol{u}_i\boldsymbol{u}_i^T\]</span></p>
+<p>Where <span class="math inline">\(\lambda_i\)</span> are the eigen
+values of <span class="math inline">\(\Sigma\)</span> <img
 src="./media/cov_visualization.png" alt="Alt text" /></p>
 <h3 id="mathematical-formulation-of-k-means">Mathematical formulation of
 K-Means</h3>
 <p>Assuming we have a dataset comprised of <span
-class="math inline"><em>N</em></span> instances, our goal is to
-determine <span class="math inline"><em>K</em></span> clusters. We can
-intuitively think of clusters of group of data points whose inter-point
-distance are smalled comparedwith the distance to points outside the
-cluster. To formalize this concept we introduce three things</p>
+class="math inline">\(N\)</span> instances, our goal is to determine
+<span class="math inline">\(K\)</span> clusters. We can intuitively
+think of clusters of group of data points whose inter-point distance are
+smalled comparedwith the distance to points outside the cluster. To
+formalize this concept we introduce three things</p>
 <ul>
-<li>A vector <span class="math inline"><strong>μ</strong></span> where
-<span
-class="math inline"><strong>μ</strong><sub><em>k</em></sub></span>,
-which will represent the mean of the the <span
-class="math inline"><em>k</em></span>-th cluster</li>
-<li>A vector of <span class="math inline"><em>n</em></span> <span
-class="math inline"><em>k</em></span>-dimensional vectors <span
-class="math inline">$\bold{r}$</span>, in which the <span
-class="math inline"><em>k</em></span>-th element is <span
-class="math inline">1</span> and the other <span
-class="math inline"><em>k</em> − 1</span> are <span
-class="math inline">0</span></li>
+<li>A vector <span class="math inline">\(\boldsymbol{\mu}\)</span> where
+<span class="math inline">\(\boldsymbol{\mu}_k\)</span>, which will
+represent the mean of the the <span class="math inline">\(k\)</span>-th
+cluster</li>
+<li>A vector of <span class="math inline">\(n\)</span> <span
+class="math inline">\(k\)</span>-dimensional vectors <span
+class="math inline">\(\boldsymbol{r}\)</span>, in which the <span
+class="math inline">\(k\)</span>-th element is <span
+class="math inline">\(1\)</span> and the other <span
+class="math inline">\(k-1\)</span> are <span
+class="math inline">\(0\)</span></li>
 <li>An objective function, called distrotion measure $J = <em>{n=1}^N
 </em>{k=1}^K r_{nk}|| - ||^2 $</li>
 </ul>
-<p>After <span class="math inline"><em>K</em></span> is decided the
-pseudo works as follow:</p>
+<p>After <span class="math inline">\(K\)</span> is decided the pseudo
+works as follow:</p>
 <ol type="1">
-<li>Set <span class="math inline"><strong>μ</strong></span> and <span
-class="math inline">$\bold{r}$</span> at random</li>
+<li>Set <span class="math inline">\(\boldsymbol{\mu}\)</span> and <span
+class="math inline">\(\boldsymbol{r}\)</span> at random</li>
 <li>While not termination condition is met: <strong>E.</strong> Optimize
-<span class="math inline"><em>J</em></span> w.r.t to <span
-class="math inline">$\bold{r}$</span> keeping <span
-class="math inline"><strong>μ</strong></span> fixed. In other words
-assign the <span class="math inline"><em>n</em></span>-th data point to
-the closer cluster. <strong>M.</strong> Optimize <span
-class="math inline"><em>J</em></span> w.r.t to <span
-class="math inline"><strong>μ</strong></span> keeping <span
-class="math inline">$\bold{r}$</span> fixed. By optimizing w.r.t to
-<span class="math inline"><strong>μ</strong></span> we implicitly
+<span class="math inline">\(J\)</span> w.r.t to <span
+class="math inline">\(\boldsymbol{r}\)</span> keeping <span
+class="math inline">\(\boldsymbol{\mu}\)</span> fixed. In other words
+assign the <span class="math inline">\(n\)</span>-th data point to the
+closer cluster. <strong>M.</strong> Optimize <span
+class="math inline">\(J\)</span> w.r.t to <span
+class="math inline">\(\boldsymbol{\mu}\)</span> keeping <span
+class="math inline">\(\boldsymbol{r}\)</span> fixed. By optimizing w.r.t
+to <span class="math inline">\(\boldsymbol{\mu}\)</span> we implicitly
 determine the mean for each cluster.</li>
 </ol>
 <h3 id="intrinsic-dimension">Intrinsic dimension</h3>
@@ -602,15 +893,15 @@ number of variables needed in a minimal representation of the data.</p>
 <li>Feature extraction</li>
 </ol>
 <p>There are two definitions that lead to the same algorithm. Given a
-<span class="math inline"><em>D</em></span> dimensional feature space,
-dimension <span class="math inline"><em>M</em></span> such that <span
-class="math inline"><em>M</em> &lt; <em>D</em></span> and an instance
-<span class="math inline">$\bold{x}_D$</span> we can express <span
-class="math inline">$\bold{x}_D$</span> with <span
-class="math inline"><em>M</em></span> dimensions taking the <span
-class="math inline"><em>M</em></span> principal components.</p>
-<p><span class="math display">$${\bold{x}_M} = \sum_{i=1}^{M}
-(\bold{x}_D^T u_{i})u_{i}$$</span></p>
+<span class="math inline">\(D\)</span> dimensional feature space,
+dimension <span class="math inline">\(M\)</span> such that <span
+class="math inline">\(M&lt;D\)</span> and an instance <span
+class="math inline">\(\boldsymbol{x}_D\)</span> we can express <span
+class="math inline">\(\boldsymbol{x}_D\)</span> with <span
+class="math inline">\(M\)</span> dimensions taking the <span
+class="math inline">\(M\)</span> principal components.</p>
+<p><span class="math display">\[{\boldsymbol{x}_M} = \sum_{i=1}^{M}
+(\boldsymbol{x}_D^T u_{i})u_{i}\]</span></p>
 <p>The intrinsic dimensions of a dataset impose a lower bound under
 which we canno reconstruct the input (apart from noise) anymore.</p>
 <h4 id="maximum-variance-formulation">Maximum Variance Formulation</h4>
@@ -620,16 +911,17 @@ variance of the projected data is maximized.</p>
 <p>The idea behind Maximum Variance PCA is that directions in which
 variance is maximized are more informative. <img
 src="./media/pca_MV.png" alt="Alt text" /></p>
-<p>We need to determine <span class="math inline">$\overline{x}$</span>
-the mean of our dataset and subtract it so the dataset has now <span
-class="math inline">0</span> mean. We determine the covariance of the
-mean <span class="math inline">0</span> dataset. Covariance can be
-written as an expansion in terms of its eigenvalues.</p>
-<p><span class="math display">$$\boldsymbol{\Sigma} = \sum_{i=1}^D
-\lambda_i\bold{u}_i\bold{u}_i^T$$</span></p>
+<p>We need to determine <span
+class="math inline">\(\overline{x}\)</span> the mean of our dataset and
+subtract it so the dataset has now <span
+class="math inline">\(0\)</span> mean. We determine the covariance of
+the mean <span class="math inline">\(0\)</span> dataset. Covariance can
+be written as an expansion in terms of its eigenvalues.</p>
+<p><span class="math display">\[\boldsymbol{\Sigma} = \sum_{i=1}^D
+\lambda_i\boldsymbol{u}_i\boldsymbol{u}_i^T\]</span></p>
 <p>By sorting them from largest to lowest, we can get the <span
-class="math inline"><em>M</em></span> principal components by taking the
-first <span class="math inline"><em>M</em></span> directions.</p>
+class="math inline">\(M\)</span> principal components by taking the
+first <span class="math inline">\(M\)</span> directions.</p>
 <h4 id="minimum-error-formulation">Minimum Error Formulation</h4>
 <p>PCA can be defined as the linear projection that minimizes the
 average projection cost, defined as the mean squared distance between
@@ -640,10 +932,10 @@ data points and their projection</p>
 learning problem. We have an agent and and environment, in a dynamic
 system. The agent interacts with the environment by choosing and action,
 to which the environment responds changing the state. Our goal is to
-determine an optimal policy <span
-class="math inline"><em>π</em> : <em>X</em> → <em>A</em></span> given a
-dataset $D = {&lt;x_1,a_1,r_1, x_n,a_n,r_n&gt;^{i} } $ composed by a
-sequence of states, action and rewards.</p>
+determine an optimal policy <span class="math inline">\(\pi : X
+\rightarrow A\)</span> given a dataset $D = {&lt;x_1,a_1,r_1,
+x_n,a_n,r_n&gt;^{i} } $ composed by a sequence of states, action and
+rewards.</p>
 <h3 id="markov-property">Markov property</h3>
 <p>An assumption made in RL is the markov assumption, in other words we
 assume that the dynamic system does not depend on the history of states,
@@ -653,24 +945,25 @@ observations, and actions as long as the current state is known.</p>
 fully observable, and we can act directly on them. Since the states are
 observable all the information that we need are contained into them. An
 MDP can be described ad a tuple:</p>
-<p><span class="math display">$$\text{MDP} =
-&lt;\bold{X},\bold{A},\delta,r&gt;$$</span></p>
-<p><span class="math inline">$\bold{X}$</span> is the set of possibles
-states.<span class="math inline">$\bold{A}$</span> is the set of
-possibles actions. <span class="math inline"><em>δ</em></span> is a
-transition model and describes how the system evolve after executing
-each action. <span class="math inline"><em>r</em></span> is a reward
-function, after each action the system recieves a numeric feedback
-signaling either a good or bad choice of action.</p>
+<p><span class="math display">\[\text{MDP} =
+&lt;\boldsymbol{X},\boldsymbol{A},\delta,r&gt;\]</span></p>
+<p><span class="math inline">\(\boldsymbol{X}\)</span> is the set of
+possibles states.<span class="math inline">\(\boldsymbol{A}\)</span> is
+the set of possibles actions. <span
+class="math inline">\(\delta\)</span> is a transition model and
+describes how the system evolve after executing each action. <span
+class="math inline">\(r\)</span> is a reward function, after each action
+the system recieves a numeric feedback signaling either a good or bad
+choice of action.</p>
 <h3 id="definition-of-k-bandit-problem">Definition of K-Bandit
 problem</h3>
 <!-- https://ai.stackexchange.com/questions/27694/what-are-the-major-differences-between-multi-armed-bandits-and-the-other-well-kn#:~:text=Multi%2DArmed%20Bandit%20is%20used%20as%20an%20introductory%20problem%20to%20reinforcement%20learning%2C%20because%20it%20illustrates%20some%20basic%20concepts%20in%20the%20field%3A%20exploration%2Dexploitation%20tradeoff%2C%20policy%2C -->
 <p>The K-bandit problem is a subclass of reinforcement learning
 problems. The problem goes as follows:</p>
 <p><strong>“You are faced to choose between <span
-class="math inline"><em>k</em></span> options, after you choose an
-option you recieve a reward, the goal is the maximize the expected
-reward over a period of time”</strong></p>
+class="math inline">\(k\)</span> options, after you choose an option you
+recieve a reward, the goal is the maximize the expected reward over a
+period of time”</strong></p>
 <p>The K-bandit problem is also called one-state MDP because you have
 only one state. The importance of the k-armed bandit is due to the fact
 that illustrates some pillar concepts of reinforcement learning, such as
@@ -678,7 +971,7 @@ the exploration-exploitation trade-off, the concept of optimal policy
 and more.</p>
 <p>In a K-Bandit problem, we have no information about the rewards. Thus
 in order to get the optimal policy we need to learn (gather informations
-about <span class="math inline"><em>r</em></span> through simulation),
+about <span class="math inline">\(r\)</span> through simulation),
 determine an optimal policy and only then we can make decisions.</p>
 <p>Depending on how the reward function behaves, and the type of
 informations about it we can define 4 solutions:</p>
@@ -689,7 +982,7 @@ iterations are needed, we can skip the learning and go directly to
 making decisions.</li>
 <li>If the rewards are deterministic, but unknown, we need to test each
 action at least one time, in order to discover the value, thus we need
-at least <span class="math inline">|<em>A</em>|</span> iterations.</li>
+at least <span class="math inline">\(|A|\)</span> iterations.</li>
 <li>If the rewards are non-deterministic, but known, the optimal
 solution can be found by picking the action which has the highest
 mean.</li>
@@ -697,45 +990,42 @@ mean.</li>
 through
 <ul>
 <li>Initialize a data structure <span
-class="math inline"><em>Θ</em></span> that will gather informations
+class="math inline">\(\Theta\)</span> that will gather informations
 about the reward.
 <ul>
-<li>For each time <span class="math inline"><em>t</em></span>, until
+<li>For each time <span class="math inline">\(t\)</span>, until
 termination:
 <ul>
 <li>Choose an action</li>
 <li>Execute the choosen action</li>
 <li>Collect the reward</li>
-<li>Update <span class="math inline"><em>Θ</em></span></li>
+<li>Update <span class="math inline">\(\Theta\)</span></li>
 </ul></li>
-<li>Choose an optimal policy <span
-class="math inline"><em>π</em><sup>*</sup></span> according to <span
-class="math inline"><em>Θ</em></span></li>
+<li>Choose an optimal policy <span class="math inline">\(\pi^*\)</span>
+according to <span class="math inline">\(\Theta\)</span></li>
 </ul></li>
 </ul></li>
 </ul>
 <h3 id="q-learning">Q-Learning</h3>
 <p>Is an algorithm to determine the optimal policy. We define the
-Q-value as <span
-class="math inline"><em>Q</em>(<em>x</em>,<em>a</em>)</span> as the
-expected cumulative reward the agent will recieve by taking the action
-<span class="math inline"><em>a</em></span> in state <span
-class="math inline"><em>x</em></span> and following the policy there
-after. For each state action pair, the Q-learning algorithm mantains a
-Q-value and updates iteratively. The pseudo code is the following:</p>
+Q-value as <span class="math inline">\(Q(x,a)\)</span> as the expected
+cumulative reward the agent will recieve by taking the action <span
+class="math inline">\(a\)</span> in state <span
+class="math inline">\(x\)</span> and following the policy there after.
+For each state action pair, the Q-learning algorithm mantains a Q-value
+and updates iteratively. The pseudo code is the following:</p>
 <ul>
 <li>For each state action pair initialize a table entry in the Q
 table.</li>
 <li>For each time:</li>
 <li><ul>
-<li>Observe the state <span class="math inline"><em>x</em></span>.</li>
-<li>Choose and action <span class="math inline"><em>a</em></span>.</li>
+<li>Observe the state <span class="math inline">\(x\)</span>.</li>
+<li>Choose and action <span class="math inline">\(a\)</span>.</li>
 <li>Execute the action choosen.</li>
 <li>Observe the new state.</li>
 <li>Collect the reward.</li>
-<li>Update the table relative to <span
-class="math inline"><em>x</em></span> , <span
-class="math inline"><em>a</em></span> with the new reward.</li>
+<li>Update the table relative to <span class="math inline">\(x\)</span>
+, <span class="math inline">\(a\)</span> with the new reward.</li>
 <li>Move to the new state.</li>
 </ul></li>
 <li>Choose the oprimal policy according to the Q table.</li>
@@ -750,70 +1040,69 @@ by choosing some suboptimal action, the overall policy is better
 exploitation thus you have a trade off. An approach that can be embedded
 into the Q-learning algorithm, is that when choosing the action, we
 choose with a probability of <span
-class="math inline">1 − <em>ϵ</em></span> greedy action and with a
-probability of <span class="math inline"><em>ϵ</em></span> a random
+class="math inline">\(1-\epsilon\)</span> greedy action and with a
+probability of <span class="math inline">\(\epsilon\)</span> a random
 action choosen uniformly.</p>
 <h3 id="hmm">HMM</h3>
 <p>The Hidden Markov Models are a formulation of a Markov Process in
 which we assume that we cannot control the evolution of the system . We
 assume that a state generates an event with a certain probability, we
 can observe the event but we cannot observe the state.</p>
-<p><span class="math display">$$\text{HMM} = &lt;\bold{X},\bold{Z},
-\pi_0&gt;$$</span></p>
-<p><span class="math inline">$\bold{X}$</span> is the set of states,
-which are not observable but we know that exists. <span
-class="math inline">$\bold{Z}$</span> is the set of observations of the
-events generated by the states. The transition model is described by
-<span class="math inline">$P(\bold{x_t}|\bold{x_{t-1}})$</span>, meaning
-that the current state depends on the previous state. The observation
-modle instead is <span
-class="math inline">$P(\bold{z_t}|\bold{x_{t-1}})$</span>, meaning that
-the current observation depends from the previous state. Last <span
-class="math inline"><em>π</em><sub>0</sub></span> describes the
-probability of starting at exactly <span class="math inline">$x_0, x_0
-\in \bold{X}$</span>. Our goal is to reconstruct the states from the
-observations.</p>
+<p><span class="math display">\[\text{HMM} =
+&lt;\boldsymbol{X},\boldsymbol{Z}, \pi_0&gt;\]</span></p>
+<p><span class="math inline">\(\boldsymbol{X}\)</span> is the set of
+states, which are not observable but we know that exists. <span
+class="math inline">\(\boldsymbol{Z}\)</span> is the set of observations
+of the events generated by the states. The transition model is described
+by <span
+class="math inline">\(P(\boldsymbol{x_t}|\boldsymbol{x_{t-1}})\)</span>,
+meaning that the current state depends on the previous state. The
+observation modle instead is <span
+class="math inline">\(P(\boldsymbol{z_t}|\boldsymbol{x_{t-1}})\)</span>,
+meaning that the current observation depends from the previous state.
+Last <span class="math inline">\(\pi_0\)</span> describes the
+probability of starting at exactly <span class="math inline">\(x_0, x_0
+\in \boldsymbol{X}\)</span>. Our goal is to reconstruct the states from
+the observations.</p>
 <h3 id="pomdp">POMDP</h3>
 <p>Partially Observable Markov Decision Process are a union of the
 elements of both MDP and HMM. As in the HMM we don’t assume a full
 observability of the states, however as in the MDP we can act on the
 environment.</p>
-<p><span class="math display">$$\text{POMDP}=
-&lt;\bold{X},\bold{A},\bold{Z}, \delta, r, o&gt;$$</span></p>
-<p><span class="math inline">$\bold{X}$</span> is the set of states,
-which are not observable but we know that exists. <span
-class="math inline">$\bold{Z}$</span> is the set of observations of the
-events generated by the states. We have a probability distribution
-describing the probability of starting at state <span
-class="math inline">$x_0, x_0 \in \bold{X}$</span>. We can act on the
-environment by choosing an action in <span
-class="math inline"><em>A</em></span>. The transition function <span
-class="math inline"><em>δ</em></span> is a probability distribution
-<span
-class="math inline"><em>P</em>(<em>x</em>′|<em>x</em>,<em>a</em>)</span>
-that describes the probability of ending up on <span
-class="math inline"><em>x</em>′</span> after executing <span
-class="math inline"><em>a</em></span> on <span
-class="math inline"><em>x</em></span>. <span
-class="math inline"><em>o</em></span> is a probability distribution over
-distributions, <span
-class="math inline"><em>P</em>(<em>z</em>′|<em>x</em>′,<em>a</em>)</span>
-describes the probability of observing <span
-class="math inline"><em>z</em>′</span>, after we end up on <span
-class="math inline"><em>x</em>′</span> by the execution of <span
-class="math inline"><em>a</em></span></p>
+<p><span class="math display">\[\text{POMDP}=
+&lt;\boldsymbol{X},\boldsymbol{A},\boldsymbol{Z}, \delta, r,
+o&gt;\]</span></p>
+<p><span class="math inline">\(\boldsymbol{X}\)</span> is the set of
+states, which are not observable but we know that exists. <span
+class="math inline">\(\boldsymbol{Z}\)</span> is the set of observations
+of the events generated by the states. We have a probability
+distribution describing the probability of starting at state <span
+class="math inline">\(x_0, x_0 \in \boldsymbol{X}\)</span>. We can act
+on the environment by choosing an action in <span
+class="math inline">\(A\)</span>. The transition function <span
+class="math inline">\(\delta\)</span> is a probability distribution
+<span class="math inline">\(P(x&#39;|x,a)\)</span> that describes the
+probability of ending up on <span class="math inline">\(x&#39;\)</span>
+after executing <span class="math inline">\(a\)</span> on <span
+class="math inline">\(x\)</span>. <span class="math inline">\(o\)</span>
+is a probability distribution over distributions, <span
+class="math inline">\(P(z&#39;|x&#39;,a)\)</span> describes the
+probability of observing <span class="math inline">\(z&#39;\)</span>,
+after we end up on <span class="math inline">\(x&#39;\)</span> by the
+execution of <span class="math inline">\(a\)</span></p>
 <h2 id="neural-networks">Neural Networks</h2>
 <p>The neural network models can be described at a mathematical level as
 a composition of functions, where each function is defined either in the
 hiden layers or the output layer. Supposing that there are <span
-class="math inline"><em>H</em></span> hidden layers <span
-class="math inline"><em>l</em></span>:</p>
-<p><span class="math display">$$y(\bold{x};\theta) =
-f^{(out)}(l^H;(\theta))\\$$</span> <span
-class="math display">$$l^H(\bold{x};\theta) =
-f^{(H)}(l^{(H-1)};(\theta))$$</span> <span class="math display">⋮</span>
-<span class="math display">$$l^{(1)}(\bold{x};\theta) =
-f^{(1)}(\bold{x};(\theta))$$</span></p>
+class="math inline">\(H\)</span> hidden layers <span
+class="math inline">\(l\)</span>:</p>
+<p><span class="math display">\[y(\boldsymbol{x};\theta) =
+f^{(out)}(l^H;(\theta))\]</span> <span
+class="math display">\[l^H(\boldsymbol{x};\theta) =
+f^{(H)}(l^{(H-1)};(\theta))\]</span> <span
+class="math display">\[\vdots\]</span> <span
+class="math display">\[l^{(1)}(\boldsymbol{x};\theta) =
+f^{(1)}(\boldsymbol{x};(\theta))\]</span></p>
 <h3 id="backpropagation">Backpropagation</h3>
 <p>The back-propagation algorithm is used to propagate gradient
 computation from the cost through the whole network. It leverages the
@@ -821,15 +1110,15 @@ chain rule and the fact that the Network is just a composition of
 functions to determine the gradient in an efficient way. The
 Backpropagation algorithm can be thought as two different steps:</p>
 <h4 id="forward-step">Forward step</h4>
-<p>It makes the input <span class="math inline">$\bold{x}$</span> “flow”
-through the network.</p>
+<p>It makes the input <span
+class="math inline">\(\boldsymbol{x}\)</span> “flow” through the
+network.</p>
 <ul>
 <li>For each layer
 <ul>
 <li>Determine the linear combination of the weights with the input and
 add the bias.</li>
-<li>Apply the <span
-class="math inline"><em>f</em><sup>(<em>k</em>)</sup></span> function to
+<li>Apply the <span class="math inline">\(f^{(k)}\)</span> function to
 the linear combination</li>
 <li>Use the result as input for the next layer</li>
 </ul></li>
@@ -852,15 +1141,16 @@ activation</li>
 <h3 id="sgd">SGD</h3>
 <p>Stochastic Gradient descent is an iterative method for optimization.
 It updates the weights using this update rule:</p>
-<p><span class="math display">$$\boldsymbol{\theta}^{(t+1)} =
-\boldsymbol{\theta}^{(t)} - \eta \nabla E(\bold{\theta})$$</span></p>
-<p>Where <span class="math inline"><em>η</em></span> is an
-hyperparameter called learning rate.</p>
+<p><span class="math display">\[\boldsymbol{\theta}^{(t+1)} =
+\boldsymbol{\theta}^{(t)} - \eta \nabla
+E(\boldsymbol{\theta})\]</span></p>
+<p>Where <span class="math inline">\(\eta\)</span> is an hyperparameter
+called learning rate.</p>
 <ul>
 <li>While the stopping criterion is not met:
 <ul>
-<li>Sample an <span class="math inline"><em>m</em></span> dimensional
-subset at random from the dataset</li>
+<li>Sample an <span class="math inline">\(m\)</span> dimensional subset
+at random from the dataset</li>
 <li>Compute the gradient estimate using Backpagation of the error
 averaged over the number of the samples</li>
 <li>Apply the update rule</li>
@@ -874,44 +1164,45 @@ which a neuron predominantly outputs values close to the asymptotic ends
 of the bounded activation function.</p>
 <h4 id="cost-function">Cost function</h4>
 <p>Model implicitly defines a conditional distribution <span
-class="math inline">$P(\bold{t} \mid \bold{x},
-\boldsymbol{\theta})$</span>. We can define the loss function using the
+class="math inline">\(P(\boldsymbol{t} \mid \boldsymbol{x},
+\boldsymbol{\theta})\)</span>. We can define the loss function using the
 Maximum likelihood principle. In particular we can just take a the
 expected value of the, the minimum of negative log likelihood.</p>
-<p><span class="math display">$$J(\boldsymbol{\theta}) =
-\mathbb{E}_{\bold{x},\bold{t}\sim D} [- \ln P(\bold{t} \mid \bold{x},
-\boldsymbol{\theta})]$$</span></p>
+<p><span class="math display">\[J(\boldsymbol{\theta}) =
+\mathbb{E}_{\boldsymbol{x},\boldsymbol{t}\sim D} [- \ln P(\boldsymbol{t}
+\mid \boldsymbol{x}, \boldsymbol{\theta})]\]</span></p>
 <p>Where the specific cost function depends on the specific model.</p>
 <h5 id="regression">Regression</h5>
 <p>Linear units: Identity activation function</p>
-<p><span class="math display">$$y = \bold{w}^T \bold{h} + \bold{b}
-$$</span></p>
+<p><span class="math display">\[y = \boldsymbol{w}^T \boldsymbol{h} +
+\boldsymbol{b} \]</span></p>
 <p>Assuming a Gaussian distribution noise the functional form of the
 error function is the MSE.</p>
-<p><span class="math display">$$J(\boldsymbol{\theta}) =
+<p><span class="math display">\[J(\boldsymbol{\theta}) =
 \mathbb{E}_{x,t\sim D} [\frac{1}{2} (t-
-y(\bold{x_n};\boldsymbol{\theta}))^2] $$</span></p>
+y(\boldsymbol{x_n};\boldsymbol{\theta}))^2] \]</span></p>
 <p>There is no “squeeze” of the input, thus the units cannot
 saturate.</p>
 <h5 id="binary-classification">Binary classification</h5>
 <p>Output units: Sigmoid activation function</p>
-<p><span class="math display">$$y = \sigma(\bold{w}^T \bold{h} +
-\bold{b}) $$</span></p>
+<p><span class="math display">\[y = \sigma(\boldsymbol{w}^T
+\boldsymbol{h} + \boldsymbol{b}) \]</span></p>
 <p>The functional form of the error function is the Binary
 cross-entropy.</p>
-<p><span
-class="math display"><em>J</em>(<strong>θ</strong>) = 𝔼<sub><em>x</em>, <em>t</em> ∼ <em>D</em></sub>[−ln<em>p</em>(<em>t</em>∣<em>x</em>)]</span></p>
+<p><span class="math display">\[J(\boldsymbol{\theta}) =
+\mathbb{E}_{x,t\sim D} [- \ln p(t \mid x)] \]</span></p>
 <p>Output unit saturates only when it gives the correct answer.</p>
 <h5 id="multi-class-classification">Multi-class classification</h5>
 <p>Output units: Softmax activation functions</p>
-<p><span class="math display">$$y_i = \text{softmax}(\alpha^{(i)}) =
-\frac{\exp(\alpha^{(i)})}{\sum_j \exp(\alpha_j)} $$</span></p>
+<p><span class="math display">\[y_i = \text{softmax}(\alpha^{(i)}) =
+\frac{\exp(\alpha^{(i)})}{\sum_j \exp(\alpha_j)} \]</span></p>
 <p>Loss function: Categorical cross-entropy</p>
-<p><span
-class="math display"><em>J</em><sub><em>i</em></sub>(<strong>θ</strong>) = 𝔼<sub><em>x</em>, <em>t</em> ∼ <em>D</em></sub>[−lnsoftmax(<em>α</em><sup>(<em>i</em>)</sup>)]</span></p>
-<p>with <span class="math inline">$( \alpha^{(i)} = \bold{w}_i^T
-\bold{h} + \bold{b}_i)$</span>. Output units saturate only when there
-are minimal errors.</p>
+<p><span class="math display">\[J_i(\boldsymbol{\theta}) =
+\mathbb{E}_{x,t \sim D} [- \ln \text{softmax}(\alpha^{(i)})]
+\]</span></p>
+<p>with <span class="math inline">\(( \alpha^{(i)} = \boldsymbol{w}_i^T
+\boldsymbol{h} + \boldsymbol{b}_i)\)</span>. Output units saturate only
+when there are minimal errors.</p>
 <h3 id="cnn">CNN</h3>
 <p>A Convolutional Neural Network are Neural Networks that uses
 convolution instead of matrix multiplication in at least one layer. They
@@ -932,13 +1223,14 @@ value</li>
 <h4
 id="determination-of-number-of-trainable-parameters-for-a-cnn">Determination
 of number of trainable parameters for a CNN</h4>
-<p><span class="math display">$$w_{out} = \frac{w_{in} - w_{k} +
-2p}{s}+1 $$</span> <span class="math display">$$h_{out} = \frac{h{in} -
-h_{k} + 2p}{s}+1 $$</span> <span
-class="math display"> ∣ <em>θ</em> ∣  = <em>w</em><sub><em>k</em></sub> × <em>h</em><sub><em>k</em></sub> × <em>d</em><sub><em>i</em><em>n</em></sub> × <em>d</em><sub><em>o</em><em>u</em><em>t</em></sub> + <em>d</em><sub><em>o</em><em>u</em><em>t</em></sub></span></p>
+<p><span class="math display">\[w_{out} = \frac{w_{in} - w_{k} +
+2p}{s}+1 \]</span> <span class="math display">\[h_{out} = \frac{h{in} -
+h_{k} + 2p}{s}+1 \]</span> <span class="math display">\[\mid \theta \mid
+= w_{k} \times h_{k} \times d_{in} \times d_{out} + d_{out}
+\]</span></p>
 <p>Necessary padding:</p>
-<p><span class="math display">$$\left\lfloor \frac{wk}{2} \right\rfloor
-$$</span></p>
+<p><span class="math display">\[\left \lfloor \frac{wk}{2} \right
+\rfloor \]</span></p>
 <h3 id="autoencoder">Autoencoder</h3>
 <p>An autoencoder is a special type of neural network that is trained to
 copy its input to its output.It has the following properties</p>
@@ -968,17 +1260,17 @@ misclassified instances, thus after each iteration we give higher weight
 to misclassified instances, thus specializing each learner in the set of
 instances that was previously misclassified.</p>
 <h5 id="adaboost">AdaBoost</h5>
-<p>Assuming you have <span class="math inline"><em>M</em></span> weak
+<p>Assuming you have <span class="math inline">\(M\)</span> weak
 learners, learnes that perform at least a little bit better than a
-random guesser Given <span
-class="math inline">(<em>D</em>={(<em>x</em><sub>1</sub>,<em>t</em><sub>1</sub>),…,(<em>x</em><sub><em>N</em></sub>,<em>t</em><sub><em>N</em></sub>)}), <em>w</em><em>h</em><em>e</em><em>r</em><em>e</em>(<em>x</em><sub><em>n</em></sub>∈<em>X</em>,<em>t</em><sub><em>n</em></sub>∈−1,  + 1)</span></p>
+random guesser Given <span class="math inline">\(( D = \{ (x_1, t_1),
+\ldots, (x_N, t_N) \} ), where ( x_n \in X, t_n \in { -1, +1 }
+)\)</span></p>
 <ul>
 <li><p>Uniformly initialize the weights.</p></li>
-<li><p>For <span
-class="math inline">(<em>m</em>=1,…,<em>M</em>)</span>:</p>
+<li><p>For <span class="math inline">\(( m = 1, \ldots, M
+)\)</span>:</p>
 <ul>
-<li>Train a weak learner <span
-class="math inline">(<em>y</em><sub><em>m</em></sub>(<em>x</em>))</span>
+<li>Train a weak learner <span class="math inline">\(( y_m(x) )\)</span>
 by minimizing the weighted error function.</li>
 <li>Evaluate alpha, the confidence that we put on the predictive
 power</li>
@@ -986,3 +1278,5 @@ power</li>
 </ul></li>
 <li><p>Output the final classifier</p></li>
 </ul>
+</body>
+</html>

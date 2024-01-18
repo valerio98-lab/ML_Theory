@@ -1,3 +1,20 @@
+<!-- pandoc --toc --standalone --mathjax -f markdown -t html ".\formule ML - Jose.md" -o '.\formule ML - Jose.html' -->
+
+<!-- ---
+title: "Machine learning Notes"
+author: "José Manuel Del Valle Delgado, Valerio Belli"
+date: "18/01/2023"
+output:
+  pdf_document:
+    number_sections: yes
+    toc: yes
+    fig_caption: yes
+    toc_depth: 2
+fontsize: 13pt
+fontFamily: lexend
+
+--- -->
+
 # Machine learning
 
 ## Definition of a machine learning problem and its goal
@@ -15,17 +32,23 @@ In supervised learning, the dataset $D$ comprises, of pairs of input output
 
 $$D = \{<x,y>|x \in X, y \in Y \}$$
 
+An  hypothesis is a candidate model that approximates a target function for mapping inputs to outputs
+
+### Consistent hypotesis
+
+A hypothesis h is consistent with a set of training examples $D$ if and only if $h(x) = c(x)$ for each example $(x, c(x))$ in $D$.
+
 ### Sample error
 
 The sample error represents the error that we make on instances present in the training set.
 
-$$\text{error}_S(h) = \frac{1}{n} \sum_{x \in S} \delta(f(x) \not ={h(x)})$$
+$$\text{error}_S(h) = \frac{1}{n} \sum_{x \in S} \delta(f(x) \neq {h(x)})$$
 
 ### True Error
 
 We assume that different instances of $X$ presented to us in the dataset is drawn from an unknown distribution $\mathcal{D}$. The true error is the error that the hypotesis make on any value choosen at random from $\mathcal{D}$.
 
-$$\text{error}_D(h) = P_{x \in D}(f(x) \not ={h(x)})$$
+$$\text{error}_D(h) = P_{x \in D}(f(x) \neq {h(x)})$$
 
 The true error is impossible to compute, but we can estimate it.
 
@@ -48,6 +71,28 @@ There are two possible approach this problem
 
 The second approach is to be preferred, because in the first is possible that at one given point no particular attribute is the best, but there are a combination that are informative.
 
+### Classification metrics
+
+#### Accuracy
+
+Accuracy is a classification metric. The accuracy is given by the number of predicitions that our model has made correctly
+
+#### Precision
+
+Precision is the ability to avoid false positives.
+
+#### Recall
+
+Recall is the ability to avoid false negatives.
+
+#### F1-Score
+
+Is the harmonic mean of the precision and recall.
+
+#### Discussion about more reliable metrics
+
+In general the accuracy gives is a good classification metric, however it is not suitable for all problems. For example in cases where the dataset is unbalanced, the accuracy might lead to misleading results. If we know that false positives are bad for our application we might try to maximize the precision, if on the other hand we want to avoid the possibility of false negatives we need to maximize the recall. In general this decision depends on the specific application and might not be too obvios. Another problem that arises is that exists a tradeoff between precision and recall, thus maximization of both might not be possible. The F1 score must be our choiche then if we have no reason to prefer recall over precision or vice versa.
+
 ### Bayesian learning
 
 The uncertainty is modeled in a bayesian framework.
@@ -60,27 +105,27 @@ $P(A|B)$ is the called posterior, beacuse is the updated belief about $A$ after 
 $P(B|A)$ is the likelihood and express how well the observed data supports our hypotesis.
 $P(A)$ is the prior, reflects the prior beliefs we had before evidence was presented to us.
 
-### Maximum a Posteriori Hypothesis
+#### Maximum a Posteriori Hypothesis
 
 Is usual that a particular learning algorithm returns not a single hypotesis but a set of hypotesis.
 Our objective would be to determine the most probable hypotesis $h$ given the data at hand $D$.
 In other word we would like to determine hypotesis that maximizes the posterior.
 
-$$h_{MAP} = \underset{h \in H}{\text{argmax}} P(h | D) \\$$
-$$\stackrel{(1)}{=} \underset{h \in H}{\text{argmax}} \frac{P(D|h)P(h)}{P(D)} \\$$
+$$h_{MAP} = \underset{h \in H}{\text{argmax}} P(h | D) $$
+$$\stackrel{(1)}{=} \underset{h \in H}{\text{argmax}} \frac{P(D|h)P(h)}{P(D)} $$
 $$\stackrel{(2)}{=} \underset{h \in H}{\text{argmax}}  {P(D|h)P(h)}$$
 
 (1) Is given by Bayes Theorem.
 (2) Is given by the fact that $P(D)$ is a constant and $\text{argmax}$ is invariant to constant multiplication.
 
-### Maximum Likelihood
+#### Maximum Likelihood
 
 Assuming we know the prior probability of each hypotesis $h$, we can determine the most probable hypotesis by computing the $h_{MAP}$.
 However the knowledge of $P(h)$, might not be available, thus we have no reason to think that a particular hypotesis must be preferred over another, so we model it as a uniform distribution, thus $P(h)$ can be ignored, because it becomes a constant value.
 
-$$h_{ML} =\underset{h \in H}{\text{argmax}} P(h \mid D) = \argmax P(D\mid h)$$
+$$h_{ML} =\underset{h \in H}{\text{argmax}} P(h \mid D) = \text{argmax} P(D\mid h)$$
 
-### Optimal Bayes Classifier
+#### Optimal Bayes Classifier
 
 While the $h_{MAP}$ is the most probable hypotesis, given the data, it's classification might not be the most probable.
 The Bayes Optimal Classifier on the other hand classify each instance with its most probable value.
@@ -91,26 +136,26 @@ $$v_{obc} = \underset{h \in H}{\text{argmax}} \sum_{hi \in H} P(v | h)P(h | D)$$
 The BOC, takes it's name from the fact that under the same hypotesis space, and with the same a priori knowledge no other method outperforms it on average.
 It is, however, not practical in real situations, due to its computationally intensive nature.
 
-### Naive Bayes classifier
+#### Naive Bayes classifier
 
 The Naive Bayes Classifier is a practical algorithm.
 It can be used under the assumption that any value $v \in V$, where $V$ is a finite set, that we want to compute, can be expressed as a conjunction of its attributes.
 Since every value can be described as a conjunction of its attributes, the naive Bayes algorithm determines $v_{map}$ in the following way:
 
-$$v_{MAP} = \underset{h \in H}{\text{argmax}}  P(v | a_1, a_2, .... , a_n) \\$$
+$$v_{MAP} = \underset{h \in H}{\text{argmax}}  P(v | a_1, a_2, .... , a_n) $$
 
-$$\stackrel{(1)}{=} \underset{h \in H}{\text{argmax}} P( a_1, a_2, .... , a_n | v) \\$$
-$$\stackrel{(2)}{=} \underset{h \in H}{\text{argmax}} P(v) \prod_i P(a_i | v) \\$$
+$$\stackrel{(1)}{=} \underset{h \in H}{\text{argmax}} P( a_1, a_2, .... , a_n | v) $$
+$$\stackrel{(2)}{=} \underset{h \in H}{\text{argmax}} P(v) \prod_i P(a_i | v) $$
 
 (1) Comes from the combined application of Bayes Theorem and that $P(a_1 , \ldots , a_n)$ is a constant.
 (2) Comes from the Independence assumption. The independence assumptions states that attributes values are conditionally independent given the target value.
 
-### Naive Bayes as approximation of the OBC
+#### Naive Bayes as approximation of the OBC
 
 Naive Bayes is considered an approximation of the Bayes optimal classifier because it simplifies the joint probability calculation by assuming conditional independence between features given the class.
 While this assumption may not hold in every case, Naive Bayes remains a practical and effective classification algorithm, providing a computationally efficient way to approach the optimal Bayes classifier in situations where the independence assumption is reasonable.
 
-### Document classification
+#### Document classification
 
 $$\text{doc}_{i} = \{abstract \cup title \cup author \cup pubblication \}$$
 
@@ -118,8 +163,8 @@ We can now set up a dataset vocabulary.
 
 So given a new doc doc_i we want to compute:
 
-$$\text{V}_{NB} = \argmax P(cj \mid D) \prod_{i=1}^{n} P(ai \mid cj, D)$$
-$$= \argmax P(cj \mid D) P(d \mid cj, D)$$
+$$\text{V}_{NB} = \text{argmax} P(cj \mid D) \prod_{i=1}^{n} P(ai \mid cj, D)$$
+$$= \text{argmax} P(cj \mid D) P(d \mid cj, D)$$
 
 We use an approaching bag of words (BoW) based on a multinomial distribution for multiclass problem.
 
@@ -147,47 +192,47 @@ dove:
 
 Given:
 
-$$y(x,\bold{w}) = w_0 + w_1x_1 + ... + w_dx_d = \bold{w}^Tx$$
+$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^Tx$$
 
 Due to noise, we can say that:
 
-$$t = y(x,\bold{w}) + \epsilon$$
+$$t = y(x,\boldsymbol{w}) + \epsilon$$
 
-The optimal value of $\bold{w}$ can be determined using a maximum likelihood approach.
-Assuming $\epsilon$ is Gaussian error, and that observations are i.i.d we can define the likelihood function of $\bold{t}$ as:
+The optimal value of $\boldsymbol{w}$ can be determined using a maximum likelihood approach.
+Assuming $\epsilon$ is Gaussian error, and that observations are i.i.d we can define the likelihood function of $\boldsymbol{t}$ as:
 
-$$P( \bold{t} \mid \bold{x}, \bold{w}, \beta) = \prod_{i=1}^{n} N(t_i\mid y(x_i,\bold{w}), \beta^{-1})$$
+$$P( \boldsymbol{t} \mid \boldsymbol{x}, \boldsymbol{w}, \beta) = \prod_{i=1}^{n} N(t_i\mid y(x_i,\boldsymbol{w}), \beta^{-1})$$
 
 Insted of maximizing this quantity we can maximize the log likelihood:
 
-$$\underset{\bold{w}}{\text{argmax}}( \log( P( \bold{t} \mid \bold{x}, w, \beta)))  \\$$
-$$= \underset{\bold{w}}{\text{argmax}} (\frac{N}{2} \log {\beta} - \frac{N}{2}\log (2\pi) - \beta E_D(\bold{w}))$$
+$$\underset{\boldsymbol{w}}{\text{argmax}}( \log( P( \boldsymbol{t} \mid \boldsymbol{x}, w, \beta)))  $$
+$$= \underset{\boldsymbol{w}}{\text{argmax}} (\frac{N}{2} \log {\beta} - \frac{N}{2}\log (2\pi) - \beta E_D(\boldsymbol{w}))$$
 
-$$\stackrel{(1)}{=} \underset{\bold{w}}{\text{argmax}} (E_D(\bold{w}))$$
-$$\stackrel{(2)}{=} \underset{\bold{w}}{\text{argmin}} (E_D(\bold{w}))$$
+$$\stackrel{(1)}{=} \underset{\boldsymbol{w}}{\text{argmax}} (E_D(\boldsymbol{w}))$$
+$$\stackrel{(2)}{=} \underset{\boldsymbol{w}}{\text{argmin}} (E_D(\boldsymbol{w}))$$
 
 (1) Comes from the fact that argmax is invariant to constant addition and multiplication.
 (2) Come from the fact that maximization of the log likelihood is equivalent to the minimization of negative log likelihood.
 Where
 
-$$E_d(\bold{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2$$
+$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2$$
 
 In order to find the minimum we need to differentiate:
 
-$$\nabla E_d(\bold{w}) = \sum_{i=1}^{N} (t_i - \bold{w}^T x_i)x_i^T$$
+$$\nabla E_d(\boldsymbol{w}) = \sum_{i=1}^{N} (t_i - \boldsymbol{w}^T x_i)x_i^T$$
 
 setting to zero:
 
-$$0 = \sum_{i=1}^{N} t_ix_i^T - \bold{w}^T (\sum_{i=1}^{N}{x_{i}x_{i}^T})$$
+$$0 = \sum_{i=1}^{N} t_ix_i^T - \boldsymbol{w}^T (\sum_{i=1}^{N}{x_{i}x_{i}^T})$$
 
 Gives us the maximum likely solution, which can be written in closed form.
 
-$$\bold{w}_{ML} = (\bold{X}^T\bold{X})^{-1} \bold{X}^T \bold{t} $$
+$$\boldsymbol{w}_{ML} = (\boldsymbol{X}^T\boldsymbol{X})^{-1} \boldsymbol{X}^T \boldsymbol{t} $$
 
 Determining the optimal values using the closed form can be costly, due to the fact that, it needs to process the entire dataset.
 We can define an iterative approach, by updating the weights based on a subset (mini batch) or only a single element (sequential) through the following learning rule.
 
-$$\bold{w} ^{\tau} \leftarrow \bold{w}^{\tau - 1} - \eta \nabla{E_n}$$
+$$\boldsymbol{w} ^{\tau} \leftarrow \boldsymbol{w}^{\tau - 1} - \eta \nabla{E_n}$$
 
 Where $E_n$ is the error averaged over the subset.
 
@@ -195,17 +240,17 @@ Where $E_n$ is the error averaged over the subset.
 
 Utilizing as a functional form, the GLM we can model the class conditional probbailities and our model as follow:
 
-$$P(C_1 \mid \bold{x}) = y(\bold{x}) = \sigma(\bold{w}^T\bold{x})$$
-$$P(C_2 \mid \bold{x}) = 1 - P(C_1 \mid \bold{x})$$
+$$P(C_1 \mid \boldsymbol{x}) = y(\boldsymbol{x}) = \sigma(\boldsymbol{w}^T\boldsymbol{x})$$
+$$P(C_2 \mid \boldsymbol{x}) = 1 - P(C_1 \mid \boldsymbol{x})$$
 
 we can express the likelihood as
 
-$$P(\bold{t} \mid \bold{w}) = \prod_{n=1}^{N} y(\bold{x}_n)^{t_n}(1-y(\bold{x}_n))^{1-t_n}$$
+$$P(\boldsymbol{t} \mid \boldsymbol{w}) = \prod_{n=1}^{N} y(\boldsymbol{x}_n)^{t_n}(1-y(\boldsymbol{x}_n))^{1-t_n}$$
 
-Since the logarithm is a non monotonic function, we can use the maximum likelihood approach and determine the optimal values by choosing $\bold{w}^*$ as the $\bold{w}$ that maximizes the log likelihood.
+Since the logarithm is a non monotonic function, we can use the maximum likelihood approach and determine the optimal values by choosing $\boldsymbol{w}^*$ as the $\boldsymbol{w}$ that maximizes the log likelihood.
 Also since maximizing a function is the same thing as minimizing negative:
 
-$$- \underset{\bold{w}}{\text{argmin}} (\ln P(\bold{t} \mid \bold{w})) = -\sum_{n = 1}^{N} [t_n \ln y(\bold{x}_n) + (1-t_n)\ln (1-y(\bold{x}_n))] = E(\bold{w})$$
+$$- \underset{\boldsymbol{w}}{\text{argmin}} (\ln P(\boldsymbol{t} \mid \boldsymbol{w})) = -\sum_{n = 1}^{N} [t_n \ln y(\boldsymbol{x}_n) + (1-t_n)\ln (1-y(\boldsymbol{x}_n))] = E(\boldsymbol{w})$$
 
 Which is the negative cross entropy.
 
@@ -230,61 +275,61 @@ $k$ is a kernel function defined as a real-valued function, simmetric and non ne
 
 ### Kernel Trick
 
-If an input vector $\bold{x}$, appers in an algorithm only as an inner product $x^Tx'$, then the inner product can be replaced with some kernel function $k(x,x')$
+If an input vector $\boldsymbol{x}$, appers in an algorithm only as an inner product $x^Tx'$, then the inner product can be replaced with some kernel function $k(x,x')$
 
 ### Determination of kernelized version for linear regression without regularization
 
 Given a linear model
 
-$$y(x,\bold{w}) = w_0 + w_1x_1 + ... + w_dx_d = \bold{w}^Tx$$
+$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^Tx$$
 
 We know, by using the maximum likely approach that a suitable error function, is the least square error
 
-$$E_d(\bold{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2$$
+$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2$$
 
-By setting it to $0$ we get the closed form of $\bold{w}^*$:
+By setting it to $0$ we get the closed form of $\boldsymbol{w}^*$:
 
-$$\bold{w}^* = (\bold{X}{\bold{X}^T})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
+$$\boldsymbol{w}^* = (\boldsymbol{X}{\boldsymbol{X}^T})^{-1}\boldsymbol{X}^T\boldsymbol{t} = \alpha \boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
 
-Were $\alpha$ is defined as $\bold{K}^{-1}\bold{t}$ and $\bold{K}$ is the Gram matrix.
-Putting $\bold{w}^*$ back into the model we obtain:
+Were $\alpha$ is defined as $\boldsymbol{K}^{-1}\boldsymbol{t}$ and $\boldsymbol{K}$ is the Gram matrix.
+Putting $\boldsymbol{w}^*$ back into the model we obtain:
 
-$$y(x,\bold{w}^*) = \bold{w}^{*^T}x = (\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+$$y(x,\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
 
 By using the kernel trick:
 
-$$y(x,\bold{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+$$y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
 
 ### Determination of kernelized version for linear regression with regularization
 
 Given a linear model
 
-$$y(x,\bold{w}) = w_0 + w_1x_1 + ... + w_dx_d = \bold{w}^Tx$$
+$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^Tx$$
 
 We know, by using the maximum likely approach that a suitable error function, is the least square error
 
-$$E_d(\bold{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2 + \lambda ||\bold{w}||^2$$
+$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2 + \lambda ||\boldsymbol{w}||^2$$
 
 Where $\lambda$ is a regularization term that controls the model complexity.
-By setting it to $0$ we get the closed form of $\bold{w}^*$:
+By setting it to $0$ we get the closed form of $\boldsymbol{w}^*$:
 
-$$\bold{w}^* = (\bold{X}{\bold{X}^T} +\lambda \bold{I_n})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
+$$\boldsymbol{w}^* = (\boldsymbol{X}{\boldsymbol{X}^T} +\lambda \boldsymbol{I_n})^{-1}\boldsymbol{X}^T\boldsymbol{t} = \alpha \boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
 
-Were $\bold{\alpha}$ is defined as $(\bold{K}+\lambda \bold{I_n})^{-1}\bold{t}$ and $\bold{K}$ is the Gram matrix.
-Putting $\bold{w}^*$ back into the model we obtain:
+Were $\boldsymbol{\alpha}$ is defined as $(\boldsymbol{K}+\lambda \boldsymbol{I_n})^{-1}\boldsymbol{t}$ and $\boldsymbol{K}$ is the Gram matrix.
+Putting $\boldsymbol{w}^*$ back into the model we obtain:
 
-$$y(x,\bold{w}^*) = \bold{w}^{*^T}x = (\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+$$y(x,\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
 
 By using the kernel trick:
 
-$$y(x,\bold{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+$$y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
 
 ### Generative vs Discriminant Model
 
-In a probabilistic framework the joint probability $P(\bold{x}\bold{t})$ gives us the most complete information.
+In a probabilistic framework the joint probability $P(\boldsymbol{x}\boldsymbol{t})$ gives us the most complete information.
 However determining it directly is often an unfeasible task.
 We can then use two different approaches.
-A generative approach aims to understand how data is generated, it does so by learning the class conditional densities of each class $P(x\mid C_k)$, the prior $P(C_k)$, and then determining the posterior $P(C_k \mid \bold{x})$.
+A generative approach aims to understand how data is generated, it does so by learning the class conditional densities of each class $P(x\mid C_k)$, the prior $P(C_k)$, and then determining the posterior $P(C_k \mid \boldsymbol{x})$.
 
 A discriminative approach are interessed in determining the decision boundary. This can be done in a probabilistic way, for example linear regression uses the form of the class conditional probability $P(C_k \mid x)$ of the Generalized linear models and find the best parameters by using a maximum likelihood approach. Another approach is to directly determine de decision boundary without manipulating explicitly probabilities.
 
@@ -292,7 +337,7 @@ A discriminative approach are interessed in determining the decision boundary. T
 
 The perceptron is a simple binary classification algorithm, designed to mimic the way a biological neuron works.
 The model coreresponds to a linear combination of the inputs, that are then passed to a function $o$
-$$y(\bold{x},\bold{w}) = o(\bold{w}^T\bold{x}) $$
+$$y(\boldsymbol{x},\boldsymbol{w}) = o(\boldsymbol{w}^T\boldsymbol{x}) $$
 
 The $o$ function is just the sign function
 
@@ -304,13 +349,13 @@ o(\mathbf{x}) =\text{sign}(\mathbf{w}^T\mathbf{x})=
 \end{cases}
 $$
 
-This function however is piecewise and thus not differentiable, this means that in order to find the optimal values of $\bold{w}$ we need to define an alternative method, called perceptron critetion.
-The output of the sign function is either $-1$ or $1$, thus a condition that must be satisfied is $\bold{w}^T\bold{x}_i\bold{t}_i > 0$. The perceptron criterion aissngs $0$ to any pattern correctly classifiedand tris to minimize the following error function:
+This function however is piecewise and thus not differentiable, this means that in order to find the optimal values of $\boldsymbol{w}$ we need to define an alternative method, called perceptron critetion.
+The output of the sign function is either $-1$ or $1$, thus a condition that must be satisfied is $\boldsymbol{w}^T\boldsymbol{x}_i\boldsymbol{t}_i > 0$. The perceptron criterion aissngs $0$ to any pattern correctly classifiedand tris to minimize the following error function:
 
-$$E(\bold{w})= - \sum_{n \in \mathcal{M}} \bold{w}\bold{x}_n \bold{t}_n$$
+$$E(\boldsymbol{w})= - \sum_{n \in \mathcal{M}} \boldsymbol{w}\boldsymbol{x}_n \boldsymbol{t}_n$$
 
 where $\mathcal{M}$ is the set of misclassified examples.
-It optimizes $E(\bold{w})$ using SGD.
+It optimizes $E(\boldsymbol{w})$ using SGD.
 According to the perceptron convergence theorem we know that if the data is linearly separable and the learning rate $\eta$ is chosen corretly the algorithm is guaranteed to finda solution in a finite amount of steps, this however does not guarantees that the time is acceptable.
 The initial set of weights is choosen at random, meaning that at the beginning we are most certainly in a bad situation, however if we choose a learning rate small enough we are guaranteed to improve our situation.
 The problem is that in a linearly separable dataset, there may exist an infinite number of solutions, and since the movement is slow, due to the learning rate is probable that we get a decision boundary near the data points, leading to a decision boundary with poor generalization performances.
@@ -319,9 +364,9 @@ The problem is that in a linearly separable dataset, there may exist an infinite
 
 KNN is a non parametric model that uses an instance based approach.
 In KNN the instances of the dataset are the parameters, thus KNN has a variable number of parameters, this mean that there is no training phase, but also that it requires a lot of memory because to make a prediction we need the entire subset.
-Given a new instance $\bold{x}$, a value $k$ and a distance metric the classification value is chosen as follow:
+Given a new instance $\boldsymbol{x}$, a value $k$ and a distance metric the classification value is chosen as follow:
 
-- Find K-Nearest neighbors of $\bold{x}$, according to the distance metric
+- Find K-Nearest neighbors of $\boldsymbol{x}$, according to the distance metric
 - Assign to $x$ the most common class among the k-nearest neighbors
 
 ### SVM
@@ -331,17 +376,17 @@ The margin is the distance between the decision boundary and its closest point.
 The maximum margin approach can be motivated as follow.
 Even if the dataset is linearly separable, there may exist many solutions, since our goal is not to determine a decision boundary but rather to determine the decision boundary that generalizes better. Since the magin is maximum we can achieve a lowe generalization error, beaause we have "more room" for error. The fact that the maximum margin yields a lowe generalization error also means that SVM are less prone to overfitting.
 
-### Kernelized SVM
+#### Kernelized SVM
 
-Given the maximum margin hyper plane, classification new instance $\bold{x}'$ is performed using by
+Given the maximum margin hyper plane, classification new instance $\boldsymbol{x}'$ is performed using by
 
-$$y(\bold{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} \bold{x}'^T \bold{x}_k )$$
+$$y(\boldsymbol{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} \boldsymbol{x}'^T \boldsymbol{x}_k )$$
 
 But since the input vector, is present only as inner product we can the condition to use the kernel trick is met and we can rewrite as
 
-$$y(\bold{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} k(\bold{x}'^T, \bold{x}_k) )$$
+$$y(\boldsymbol{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} k(\boldsymbol{x}'^T, \boldsymbol{x}_k) )$$
 
-### Soft margins
+#### Soft margins
 
 If the dataset is not perfectly linearly separable, class conditional distributions may overlap and SVM will result in poor generalization.
 We can relax the SVM, allowing to make some classifications.
@@ -349,7 +394,7 @@ It is intuitive to understand that, misclassified points are points that are on 
 We formalize this concept through the we introduction of slack variables $\xi$.
 Slack variables mark a penalty that increases as the distance from the decision boundary grows.
 
-### SVM for regression
+#### SVM for regression
 
 Whe can use SVM for regression.
 In machine learning, and more specifically in supervised regression problems, we know we have to deal with noise.
@@ -377,6 +422,16 @@ $$J(w, C) = C \sum_{i=1}^{N} (\xi_n+ \hat{\xi}_n) + \frac{1}{2} \| w \|^2$$
 
 Which can be minimized
 
+### OVO Vs OVR
+
+There are models, like SVM that only support binary classification.
+It is possible to extend the capabilities of the SVM into a $k$-classes classifier by using two approaches
+
+- OVR: The One Versus Rest approach trains $k-1$ different classifiers, each specialized on distinguishing its class from the others. The $k$-th is determined by the other $k-1$ classifiers.
+- OVO: The One Versus One approach trains $\frac{k}{k-1}/2$ different classifiers, corresponding to the total pair of possible classes.
+
+The classification result is chosen by a majority vote.
+
 ## Unsupervised learning
 
 ### Expectation Maximization
@@ -387,14 +442,14 @@ In its most basic form the EM algorithm works as follows:
 
 - Initialize the parameters that need to be maximized
 - Until termination:
-  E. Estimate the missing variables in the dataset
-  M. Maximize the parameters of the model in the presence of the data
+  - **E** Estimate the missing variables in the dataset
+  - **M** Maximize the parameters of the model in the presence of the data
 
 ### Gaussian Mixture Model
 
 The Gaussian distribution is a versatile distribution, however being unimodal (has one maximum) it may not be a good fit for specific problems. We can extend the Gaussian distribution with the concept of mixture distribution or more specifically Gaussian Mixture Models. We can define a GMM as a linear superposition of $K$ Gaussian
 
-$$P(\bold{x}) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x \mid \mu_{k}, \Sigma_{k})$$
+$$P(\boldsymbol{x}) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x \mid \mu_{k}, \Sigma_{k})$$
 
 Where $\pi_k$ is called mixing coeffient and can be thought of the prior probability of picking the point from the $k$-th Gaussian. And $\mu_k$ and $\Sigma_k$ are the mean and covariance for the $k$-th Gaussian.
 
@@ -402,7 +457,7 @@ The form of the GM distribution  is governed by the parameters, one way to set t
 
 When visualizing this parameters it might be useful to remember that the variance of a gaussian $\Sigma$ can be expressed in its $D$ components as follow:
 
-$$\Sigma = \sum_i=1^D \lambda_i\bold{u}_i\bold{u}_i^T$$
+$$\Sigma = \sum_i=1^D \lambda_i\boldsymbol{u}_i\boldsymbol{u}_i^T$$
 
 Where $\lambda_i$ are the eigen values of $\Sigma$
 ![Alt text](./media/cov_visualization.png)
@@ -412,15 +467,17 @@ Where $\lambda_i$ are the eigen values of $\Sigma$
 Assuming we have a dataset comprised of $N$ instances, our goal is to determine $K$ clusters. We can intuitively think of clusters of group of data points whose inter-point distance are smalled comparedwith the distance  to points outside the cluster. To formalize this concept we introduce three things
 
 - A vector $\boldsymbol{\mu}$ where $\boldsymbol{\mu}_k$, which will represent the mean of the the $k$-th cluster
-- A vector of $n$ $k$-dimensional vectors $\bold{r}$, in which the $k$-th element is $1$ and the other $k-1$ are $0$
-- An objective function, called distrotion measure $J = \sum_{n=1}^N \sum_{k=1}^K r_{nk}||\bold{x} - \boldsymbol{\mu_k}||^2 $
+- A vector of $n$ $k$-dimensional vectors $\boldsymbol{r}$, in which the $k$-th element is $1$ and the other $k-1$ are $0$
+- An objective function, called distrotion measure $J = \sum_{n=1}^N \sum_{k=1}^K r_{nk}||\boldsymbol{x} - \boldsymbol{\mu_k}||^2 $
 
 After $K$ is decided the pseudo works as follow:
 
-1. Set $\boldsymbol{\mu}$ and $\bold{r}$ at random
+1. Set $\boldsymbol{\mu}$ and $\boldsymbol{r}$ at random
 2. While not termination condition is met:
-  **E.** Optimize $J$ w.r.t to $\bold{r}$ keeping $\boldsymbol{\mu}$ fixed. In other words assign the $n$-th data point to the closer cluster.
-  **M.** Optimize $J$ w.r.t to $\boldsymbol{\mu}$ keeping $\bold{r}$ fixed. By optimizing w.r.t to $\boldsymbol{\mu}$ we implicitly determine the mean for each cluster.
+   - **E.** Optimize $J$ w.r.t to $\boldsymbol{r}$ keeping $\boldsymbol{\mu}$ fixed. In other words assign the $n$-th data point to the closer cluster.
+   - **M.** Optimize $J$ w.r.t to $\boldsymbol{\mu}$ keeping $\boldsymbol{r}$ fixed. By optimizing w.r.t to $\boldsymbol{\mu}$ we implicitly determine the mean for each cluster.
+
+A problem with K-means is the fact that it might get stuck in local minimum, preventing effectively to reach the global optimum when few data is available. Also it is not robust to outliers, so data apart from the centroid can offet it a lot
 
 ### Intrinsic dimension
 
@@ -428,16 +485,16 @@ The intrinsic dimension for a data set can be thought of as the number of variab
 
 ### PCA
 
-Is an tequique widely used for applications such as
+Is an technique widely used for applications such as
 
 1. Dimensionality reduction
 2. Data compression
 3. Data visualization
 4. Feature extraction
 
-There are two definitions that lead to the same algorithm. Given a $D$ dimensional feature space, dimension $M$ such that $M<D$ and an instance $\bold{x}_D$ we can express $\bold{x}_D$ with $M$ dimensions taking the $M$ principal components.
+There are two definitions that lead to the same algorithm. Given a $D$ dimensional feature space, dimension $M$ such that $M<D$ and an instance $\boldsymbol{x}_D$ we can express $\boldsymbol{x}_D$ with $M$ dimensions taking the $M$ principal components.
 
-$${\bold{x}_M} = \sum_{i=1}^{M} (\bold{x}_D^T u_{i})u_{i}$$
+$${\boldsymbol{x}_M} = \sum_{i=1}^{M} (\boldsymbol{x}_D^T u_{i})u_{i}$$
 
 The intrinsic dimensions of a dataset impose a lower bound under which we canno reconstruct the input (apart from noise) anymore.
 
@@ -450,7 +507,7 @@ The idea behind Maximum Variance PCA is that directions in which variance is max
 
 We need to determine $\overline{x}$ the mean of our dataset and subtract it so the dataset has now $0$ mean. We determine the covariance of the mean $0$ dataset. Covariance can be written as an expansion in terms of its eigenvalues.
 
-$$\boldsymbol{\Sigma} = \sum_{i=1}^D \lambda_i\bold{u}_i\bold{u}_i^T$$
+$$\boldsymbol{\Sigma} = \sum_{i=1}^D \lambda_i\boldsymbol{u}_i\boldsymbol{u}_i^T$$
 
 By sorting them from largest to lowest, we can get the $M$ principal components by taking the first $M$ directions.
 
@@ -478,9 +535,9 @@ We assume that the states are fully observable, and we can act directly on them.
 Since the states are observable all the information that we need are contained into them.
 An MDP can be described ad a tuple:
 
-$$\text{MDP} = <\bold{X},\bold{A},\delta,r>$$
+$$\text{MDP} = <\boldsymbol{X},\boldsymbol{A},\delta,r>$$
 
-$\bold{X}$ is the set of possibles states.$\bold{A}$ is the set of possibles actions. $\delta$ is a transition model and describes how the system evolve after executing each action. $r$ is a reward function, after each action the system recieves a numeric feedback signaling either a good or bad choice of action.
+$\boldsymbol{X}$ is the set of possibles states.$\boldsymbol{A}$ is the set of possibles actions. $\delta$ is a transition model and describes how the system evolve after executing each action. $r$ is a reward function, after each action the system recieves a numeric feedback signaling either a good or bad choice of action.
 
 ### Definition of K-Bandit problem
 <!-- https://ai.stackexchange.com/questions/27694/what-are-the-major-differences-between-multi-armed-bandits-and-the-other-well-kn#:~:text=Multi%2DArmed%20Bandit%20is%20used%20as%20an%20introductory%20problem%20to%20reinforcement%20learning%2C%20because%20it%20illustrates%20some%20basic%20concepts%20in%20the%20field%3A%20exploration%2Dexploitation%20tradeoff%2C%20policy%2C -->
@@ -539,24 +596,24 @@ An approach that can be embedded into the Q-learning algorithm, is that when cho
 The Hidden Markov Models are a formulation of a Markov Process in which we assume that we cannot control the evolution of the system .
 We assume that a state generates an event with a certain probability, we can observe the event but we cannot observe the state.
 
-$$\text{HMM} = <\bold{X},\bold{Z}, \pi_0>$$
+$$\text{HMM} = <\boldsymbol{X},\boldsymbol{Z}, \pi_0>$$
 
-$\bold{X}$ is the set of states, which are not observable but we know that exists.
-$\bold{Z}$ is the set of observations of the events generated by the states.
-The transition model is described by $P(\bold{x_t}|\bold{x_{t-1}})$, meaning that the current state depends on the previous state.
-The observation modle instead is $P(\bold{z_t}|\bold{x_{t-1}})$, meaning that the current observation depends from the previous state.
-Last $\pi_0$ describes the probability of starting at exactly $x_0, x_0 \in \bold{X}$. Our goal is to reconstruct the states from the observations.
+$\boldsymbol{X}$ is the set of states, which are not observable but we know that exists.
+$\boldsymbol{Z}$ is the set of observations of the events generated by the states.
+The transition model is described by $P(\boldsymbol{x_t}|\boldsymbol{x_{t-1}})$, meaning that the current state depends on the previous state.
+The observation modle instead is $P(\boldsymbol{z_t}|\boldsymbol{x_{t-1}})$, meaning that the current observation depends from the previous state.
+Last $\pi_0$ describes the probability of starting at exactly $x_0, x_0 \in \boldsymbol{X}$. Our goal is to reconstruct the states from the observations.
 
 ### POMDP
 
 Partially Observable Markov Decision Process are a union of the elements of both MDP and HMM.
 As in the HMM we don't assume a full observability of the states, however as in the MDP we can act on the environment.
 
-$$\text{POMDP}= <\bold{X},\bold{A},\bold{Z}, \delta, r, o>$$
+$$\text{POMDP}= <\boldsymbol{X},\boldsymbol{A},\boldsymbol{Z}, \delta, r, o>$$
 
-$\bold{X}$ is the set of states, which are not observable but we know that exists.
-$\bold{Z}$ is the set of observations of the events generated by the states.
-We have a probability distribution describing the probability of starting at state $x_0, x_0 \in \bold{X}$.
+$\boldsymbol{X}$ is the set of states, which are not observable but we know that exists.
+$\boldsymbol{Z}$ is the set of observations of the events generated by the states.
+We have a probability distribution describing the probability of starting at state $x_0, x_0 \in \boldsymbol{X}$.
 We can act on the environment by choosing an action in $A$.
 The transition function $\delta$ is a probability distribution $P(x'|x,a)$ that describes the probability of ending up on $x'$ after executing $a$ on $x$.
 $o$ is a probability distribution over distributions, $P(z'|x',a)$  describes the probability of observing $z'$, after we end up on $x'$ by the execution of $a$
@@ -565,10 +622,10 @@ $o$ is a probability distribution over distributions, $P(z'|x',a)$  describes th
 
 The neural network models can be described at a mathematical level as a composition of functions, where each function is defined either in the hiden layers or the output layer. Supposing that there are $H$ hidden layers $l$:
 
-$$y(\bold{x};\theta) = f^{(out)}(l^H;(\theta))\\$$
-$$l^H(\bold{x};\theta) = f^{(H)}(l^{(H-1)};(\theta))$$
+$$y(\boldsymbol{x};\theta) = f^{(out)}(l^H;(\theta))$$
+$$l^H(\boldsymbol{x};\theta) = f^{(H)}(l^{(H-1)};(\theta))$$
 $$\vdots$$
-$$l^{(1)}(\bold{x};\theta) = f^{(1)}(\bold{x};(\theta))$$
+$$l^{(1)}(\boldsymbol{x};\theta) = f^{(1)}(\boldsymbol{x};(\theta))$$
 
 ### Backpropagation
 
@@ -576,7 +633,7 @@ The back-propagation algorithm is used to propagate gradient computation from th
 
 #### Forward step
 
-It makes the input $\bold{x}$ "flow" through the network.
+It makes the input $\boldsymbol{x}$ "flow" through the network.
 
 - For each layer
   - Determine the linear combination of the weights with the input and add the bias.
@@ -598,7 +655,7 @@ It takes the gradient of the loss and makes it "flow" up until the input
 
 Stochastic Gradient descent is an iterative method for optimization. It updates the weights using this update rule:
 
-$$\boldsymbol{\theta}^{(t+1)} = \boldsymbol{\theta}^{(t)} - \eta \nabla E(\bold{\theta})$$
+$$\boldsymbol{\theta}^{(t+1)} = \boldsymbol{\theta}^{(t)} - \eta \nabla E(\boldsymbol{\theta})$$
 
 Where $\eta$ is an hyperparameter called learning rate.
 
@@ -615,9 +672,9 @@ A saturating activation functions squeeze the input. In the neural network conte
 
 #### Cost function
 
-Model implicitly defines a conditional distribution $P(\bold{t} \mid \bold{x}, \boldsymbol{\theta})$. We can define the loss function using the Maximum likelihood principle. In particular we can just take a the expected value of the, the minimum of negative log likelihood.
+Model implicitly defines a conditional distribution $P(\boldsymbol{t} \mid \boldsymbol{x}, \boldsymbol{\theta})$. We can define the loss function using the Maximum likelihood principle. In particular we can just take a the expected value of the, the minimum of negative log likelihood.
 
-$$J(\boldsymbol{\theta}) = \mathbb{E}_{\bold{x},\bold{t}\sim D} [- \ln P(\bold{t} \mid \bold{x}, \boldsymbol{\theta})]$$
+$$J(\boldsymbol{\theta}) = \mathbb{E}_{\boldsymbol{x},\boldsymbol{t}\sim D} [- \ln P(\boldsymbol{t} \mid \boldsymbol{x}, \boldsymbol{\theta})]$$
 
 Where the specific cost function depends on the specific model.
 
@@ -625,11 +682,11 @@ Where the specific cost function depends on the specific model.
 
 Linear units: Identity activation function
 
-$$y = \bold{w}^T \bold{h} + \bold{b} $$
+$$y = \boldsymbol{w}^T \boldsymbol{h} + \boldsymbol{b} $$
 
 Assuming a Gaussian distribution noise the functional form of the error function is the MSE.
 
-$$J(\boldsymbol{\theta}) = \mathbb{E}_{x,t\sim D} [\frac{1}{2} (t- y(\bold{x_n};\boldsymbol{\theta}))^2] $$
+$$J(\boldsymbol{\theta}) = \mathbb{E}_{x,t\sim D} [\frac{1}{2} (t- y(\boldsymbol{x_n};\boldsymbol{\theta}))^2] $$
 
 There is no "squeeze" of the input, thus the units cannot saturate.
 
@@ -637,7 +694,7 @@ There is no "squeeze" of the input, thus the units cannot saturate.
 
 Output units: Sigmoid activation function
 
-$$y = \sigma(\bold{w}^T \bold{h} + \bold{b}) $$
+$$y = \sigma(\boldsymbol{w}^T \boldsymbol{h} + \boldsymbol{b}) $$
 
 The functional form of the error function is the Binary cross-entropy.
 
@@ -655,7 +712,7 @@ Loss function: Categorical cross-entropy
 
 $$J_i(\boldsymbol{\theta}) = \mathbb{E}_{x,t \sim D} [- \ln \text{softmax}(\alpha^{(i)})] $$
 
-with $( \alpha^{(i)} = \bold{w}_i^T \bold{h} + \bold{b}_i)$.
+with $( \alpha^{(i)} = \boldsymbol{w}_i^T \boldsymbol{h} + \boldsymbol{b}_i)$.
 Output units saturate only when there are minimal errors.
 
 ### CNN
@@ -677,7 +734,7 @@ $$\mid \theta \mid = w_{k} \times h_{k} \times d_{in} \times d_{out} + d_{out} $
 
 Necessary padding:
 
-$$\left\lfloor \frac{wk}{2} \right\rfloor $$
+$$\left \lfloor \frac{wk}{2} \right \rfloor $$
 
 ### Autoencoder
 
