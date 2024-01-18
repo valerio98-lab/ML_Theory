@@ -28,7 +28,7 @@ $$ \text{error}_S(h) = \frac{1}{n} \sum_{x \in S} \delta(f(x) \not ={h(x)})$$
 We assume that different instances of $X$ presented to us in the dataset is drawn from an unknown distribution $\mathcal{D}$.
 The true error is the error that the hypotesis make on any value choosen at random from $\mathcal{D}$.
 
-$$ \text{error}_D(h) = \P_{x \in D}(f(x) \not ={h(x)})$$
+$$ \text{error}_D(h) = P_{x \in D}(f(x) \not ={h(x)})$$
 
 The true error is impossible to compute, but we can estimate it.
 
@@ -194,8 +194,25 @@ $$ \bold{w} ^{\tau} \leftarrow \bold{w}^{\tau - 1} - \eta \nabla{E_n}$$
 
 Where $E_n$ is the error averaged over the subset.
 
-<!-- Checkpoint -->
-## Gram Matrix
+### Logistic Regression
+
+Utilizing as a functional form, the GLM we can model the class conditional probbailities and our model as follow:
+
+$$ P(C_1 \mid \bold{x}) = y(\bold{x}) = \sigma(\bold{w}^T\bold{x})$$
+$$ P(C_2 \mid \bold{x}) = 1 - P(C_1 \mid \bold{x})$$
+
+we can express the likelihood as
+
+$$ P(\bold{t} \mid \bold{w}) = \prod_{n=1}^{N} y(\bold{x}_n)^{t_n}(1-y(\bold{x}_n))^{1-t_n}$$
+
+Since the logarithm is a non monotonic function, we can use the maximum likelihood approach and determine the optimal values by choosing $\bold{w}^*$ as the $\bold{w}$ that maximizes the log likelihood.
+Also since maximizing a function is the same thing as minimizing negative:
+
+$$- \underset{\bold{w}}{\text{argmin}} (\ln P(\bold{t} \mid \bold{w})) = -\sum_{n = 1}^{N} [t_n \ln y(\bold{x}_n) + (1-t_n)\ln (1-y(\bold{x}_n))] = E(\bold{w})$$
+
+Which is the negative cross entropy.
+
+### Gram Matrix
 
 A Gram Matrix is an $N \times N$ symmetric matrix with elements:
 
@@ -208,39 +225,244 @@ K = \begin{bmatrix}
     K(x_n, x_1) & K(x_n, x_2) & \cdots & K(x_n, x_n)
 \end{bmatrix}
 $$
+The entries of the Gram matrix correspond to the pairwise similarities between data points, and this matrix is employed to compute decision boundaries in the transformed feature space.
 
-## Kernelized version for regression
+### Definition of kernel
 
-Typical Question:
-
-$y(x) = \sum_{i=1}^{n} \alpha_{i}x_{i}^Tx$
-
-Now, if a vector input x appears in an algorithm only in the form of inner product we can replace the inner product with some kernel k(x,x'), where:
-
-$k$ is a kernel function defined as a real-valued function k(x,x') where x,x' $\in$ X. A similarity measure between instances x and x'.
-
-Tipically simmetryc and non negative, **BUT NOT STRICTLY REQUIRED**
-
-After kernel trick we obtain:
-
-$y(x) = \sum_{i=1}^{n} \alpha_{i}k(x_{n},x)$
+$k$ is a kernel function defined as a real-valued function, simmetric and non negative. $k(x,x')$ with $x,x' \in X$ defines  similarity measure between instances $x$ and $x'$.
 
 ### Kernel Trick
 
-The "kernel trick" is a technique used in machine learning algorithms that allows operations in high-dimensional spaces without explicitly computing the transformations of data into those spaces. It leverages kernel functions to compute the dot product (a measure of similarity) between vectors in a higher-dimensional space, enabling linear algorithms to solve non-linear problems. This makes it possible, for example, to separate classes of data that aren't linearly separable in the original space.
+If an input vector $\bold{x}$, appers in an algorithm only as an inner product $x^Tx'$, then the inner product can be replaced with some kernel function $k(x,x')$
 
-## Unsupervised learning
+### Determination of kernelized version for linear regression without regularization
+
+Given a linear model
+
+$$ y(x,\bold{w}) = w_0 + w_1x_1 + ... + w_dx_d = \bold{w}^Tx$$
+
+We know, by using the maximum likely approach that a suitable error function, is the least square error
+
+$$E_d(\bold{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2$$
+
+By setting it to $0$ we get the closed form of $\bold{w}^*$:
+
+$$\bold{w}^* = (\bold{X}{\bold{X}^T})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
+
+Were $\alpha$ is defined as $\bold{K}^{-1}\bold{t}$ and $\bold{K}$ is the Gram matrix.
+Putting $\bold{w}^*$ back into the model we obtain:
+
+$$ y(x,\bold{w}^*) = \bold{w}^{*^T}x = (\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+
+By using the kernel trick:
+
+$$ y(x,\bold{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+
+### Determination of kernelized version for linear regression with regularization
+
+Given a linear model
+
+$$ y(x,\bold{w}) = w_0 + w_1x_1 + ... + w_dx_d = \bold{w}^Tx$$
+
+We know, by using the maximum likely approach that a suitable error function, is the least square error
+
+$$E_d(\bold{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \bold{w}^Tx_i})^2 + \lambda ||\bold{w}||^2$$
+
+Where $\lambda$ is a regularization term that controls the model complexity.
+By setting it to $0$ we get the closed form of $\bold{w}^*$:
+
+$$\bold{w}^* = (\bold{X}{\bold{X}^T} +\lambda \bold{I_n})^{-1}\bold{X}^T\bold{t} = \alpha \bold{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
+
+Were $\bold{\alpha}$ is defined as $(\bold{K}+\lambda \bold{I_n})^{-1}\bold{t}$ and $\bold{K}$ is the Gram matrix.
+Putting $\bold{w}^*$ back into the model we obtain:
+
+$$ y(x,\bold{w}^*) = \bold{w}^{*^T}x = (\alpha\bold{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+
+By using the kernel trick:
+
+$$ y(x,\bold{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+
+### Generative vs Discriminant Model
+
+In a probabilistic framework the joint probability $P(\bold{x}\bold{t})$ gives us the most complete information.
+However determining it directly is often an unfeasible task.
+We can then use two different approaches.
+A generative approach aims to understand how data is generated, it does so by learning the class conditional densities of each class $P(x\mid C_k)$, the prior $P(C_k)$, and then determining the posterior $P(C_k \mid \bold{x})$.
+
+A discriminative approach are interessed in determining the decision boundary. This can be done in a probabilistic way, for example linear regression uses the form of the class conditional probability $P(C_k \mid x)$ of the Generalized linear models and find the best parameters by using a maximum likelihood approach. Another approach is to directly determine de decision boundary without manipulating explicitly probabilities.
+
+### Perceptron
+
+The perceptron is a simple binary classification algorithm, designed to mimic the way a biological neuron works.
+The model coreresponds to a linear combination of the inputs, that are then passed to a function $o$
+$$y(\bold{x},\bold{w}) = o(\bold{w}^T\bold{x}) $$
+
+The $o$ function is just the sign function
+
+$$
+o(\mathbf{x}) =\text{sign}(\mathbf{w}^T\mathbf{x})=
+\begin{cases}
+1 & \text{if } \mathbf{w}^T\mathbf{x} > 0 \\
+-1 & \text{otherwise}
+\end{cases}
+$$
+
+This function however is piecewise and thus not differentiable, this means that in order to find the optimal values of $\bold{w}$ we need to define an alternative method, called perceptron critetion.
+The output of the sign function is either $-1$ or $1$, thus a condition that must be satisfied is $\bold{w}^T\bold{x}_i\bold{t}_i > 0$. The perceptron criterion aissngs $0$ to any pattern correctly classifiedand tris to minimize the following error function:
+
+$$E(\bold{w})= - \sum_{n \in \mathcal{M}} \bold{w}\bold{x}_n \bold{t}_n$$
+
+where $\mathcal{M}$ is the set of misclassified examples.
+It optimizes $E(\bold{w})$ using SGD.
+According to the perceptron convergence theorem we know that if the data is linearly separable and the learning rate $\eta$ is chosen corretly the algorithm is guaranteed to finda solution in a finite amount of steps, this however does not guarantees that the time is acceptable.
+The initial set of weights is choosen at random, meaning that at the beginning we are most certainly in a bad situation, however if we choose a learning rate small enough we are guaranteed to improve our situation.
+The problem is that in a linearly separable dataset, there may exist an infinite number of solutions, and since the movement is slow, due to the learning rate is probable that we get a decision boundary near the data points, leading to a decision boundary with poor generalization performances.
 
 ### K-NN
 
-Given a learning function and a labeled Dataset D, for a new instance x':
+KNN is a non parametric model that uses an instance based approach.
+In KNN the instances of the dataset are the parameters, thus KNN has a variable number of parameters, this mean that there is no training phase, but also that it requires a lot of memory because to make a prediction we need the entire subset.
+Given a new instance $\bold{x}$, a value $k$ and a distance metric the classification value is chosen as follow:
 
-1. Find K-Nearest neighbors of new instance x'
-2. Assign to x' the most common label among the k-nearest neighbors to x'
+- Find K-Nearest neighbors of $\bold{x}$, according to the distance metric
+- Assign to $x$ the most common class among the k-nearest neighbors
 
-Likelihood of Class C for a new instance x':
+### SVM
 
-$$ P(C\midx,D, K) = \frac{1}{k} \sum_{xn \in Nk(xn,D)} I(tn=C)$$
+The Support Vector Machines makes classification using the maximum margin.
+The margin is the distance between the decision boundary and its closest point.
+The maximum margin approach can be motivated as follow.
+Even if the dataset is linearly separable, there may exist many solutions, since our goal is not to determine a decision boundary but rather to determine the decision boundary that generalizes better. Since the magin is maximum we can achieve a lowe generalization error, beaause we have "more room" for error. The fact that the maximum margin yields a lowe generalization error also means that SVM are less prone to overfitting.
+
+### Kernelized SVM
+
+Given the maximum margin hyper plane, classification new instance $\bold{x}'$ is performed using by
+
+$$y(\bold{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} \bold{x}'^T \bold{x}_k )$$
+
+But since the input vector, is present only as inner product we can the condition to use the kernel trick is met and we can rewrite as
+
+$$y(\bold{x}') = \text{sign}( w_0^* + \sum_{k, x_k\in SV} a_k^*t_{k} k(\bold{x}'^T, \bold{x}_k) )$$
+
+### Soft margins
+
+If the dataset is not perfectly linearly separable, class conditional distributions may overlap and SVM will result in poor generalization.
+We can relax the SVM, allowing to make some classifications.
+It is intuitive to understand that, misclassified points are points that are on the wrong side of the decision boundary. Another intuitive thing is that the farther from the decision boundary the point is, the worst its classification.
+We formalize this concept through the we introduction of slack variables $\xi$.
+Slack variables mark a penalty that increases as the distance from the decision boundary grows.
+
+### SVM for regression
+
+Whe can use SVM for regression.
+In machine learning, and more specifically in supervised regression problems, we know we have to deal with noise.
+Thus if we make a model we know that is possible that the error we make is non zero.
+We express this concept utilizing the following error function:
+
+$$J(w, C) = C \sum_{i=1}^{N} L_{\epsilon}(t_i, y_i) + \frac{1}{2} \| w \|^2$$
+
+In which the term $L_{\epsilon}$ is called $\epsilon$-insensitive error function:
+
+$$
+L_{\epsilon}(t, y) =
+\begin{cases}
+0 & \text{se } |t-y|<\epsilon \\
+|t-y|-\epsilon & \text{else}
+\end{cases}
+$$
+
+The result of using the $\epsilon$-insensitive error is that there is an immaginary tube, called $\epsilon$-tube in which the predictions are assumed correct.
+The problem is that $\epsilon$-insensitive error function is piecewise linear and thus not differentiable.
+We can solve this problem by introducing two slack variables $\xi$ and $\hat{\xi}$ which represents how much we sthrive from the $\epsilon$-tube.
+Constraining $\xi \geq 0$ and $\hat{\xi}\geq 0$ we can reexpress the oerror function as
+
+$$J(w, C) = C \sum_{i=1}^{N} (\xi_n+ \hat{\xi}_n) + \frac{1}{2} \| w \|^2$$
+
+Which can be minimized
+
+## Unsupervised learning
+
+### Expectation Maximization
+
+The EM algorithm is used to find maximum likelihood parameters of a statistical model in cases where the equations cannot be solved directly.
+Typically these models involve latent variables in addition to unknown parameters and known data observations.
+That is, either missing values exist among the data, or the model can be formulated more simply by assuming the existence of further unobserved data points.
+For example, a mixture model can be described more simply by assuming that each observed data point has a corresponding unobserved data point, or latent variable, specifying the mixture component to which each data point belongs.
+In its most basic form the EM algorithm works as follows:
+
+- Initialize the parameters that need to be maximized
+- Until termination:
+  E. Estimate the missing variables in the dataset
+  M. Maximize the parameters of the model in the presence of the data
+
+### Gaussian Mixture Model
+
+The Gaussian distribution is a versatile distribution, however being unimodal (has one maximum) it may not be a good fit for specific problems.
+We can extend the Gaussian distribution with the concept of mixture distribution or more specifically Gaussian Mixture Models.
+We can define a GMM as a linear superposition of $K$ Gaussian
+
+$$ P(\bold{x}) = \sum_{k=1}^{K} \pi_{k}\mathcal{N}(x \mid \mu_{k}, \Sigma_{k})$$
+
+Where $\pi_k$ is called mixing coeffient and can be thought of the prior probability of picking the point from the $k$-th Gaussian.
+And $\mu_k$ and $\Sigma_k$ are the mean and covariance for the $k$-th Gaussian.
+
+The form of the GM distribution  is governed by the parameters, one way to set them is through the maximum likelihood approach, however due to the summation of gaussians is not possible to write a solution in closed form and the solution is determined through the EM algorithm.
+
+When visualizing this parameters it might be useful to remember that the variance of a gaussian $\Sigma$ can be expressed in its $D$ components as follow:
+
+$$\Sigma = \sum_i=1^D \lambda_i\bold{u}_i\bold{u}_i^T$$
+
+Where $\lambda_i$ are the eigen values of $\Sigma$
+![Alt text](./media/cov_visualization.png)
+
+<!-- Check point -->
+
+### Mathematical formulation of K-Means
+
+1. Set a K Value
+2. Take K single clusters and assigns N-K samples to them based on distance between centroids and point. After each assignment recompute the centroid
+3. Take each sample and compute its distance from the centroid of the clusters, if the samples it is not in the centroid closest clusters switch it. Recompute the centroid
+4. Repeat 3 until convergence
+
+### PCA
+
+### Principali Usi
+
+1. Dimensionality reduction
+2. data compression
+3. Data visualization
+4. Feature Extraction
+
+### Express the points in M
+
+$$ \overline{x}_{n} = \sum_{i=1}^{n} (x_{n}^T u_{i})u_{i}$$
+
+### Intrinsic dimension
+
+Minimum dimension to represent the dataset.
+
+### Goal: Maximize data variance after projection to some direction u1
+
+Projected Points:
+$x_{n}^Tu1$
+
+Anzitutto fissiamo $\overline{x}$ come la media del nostro dataset, centriamo dunque il dataset sulla nostra media in maniera tale che esso abbiamo media 0.
+A questo punto passiamo alla fase di massimizzazione della varianza calcolando la varianza come:
+
+$$ \frac{1}{N} \sum_{n=1}^N [u_{1}^Tx_{n} - u_{1}^T\overline{x}]^2 = u_1^TSu_1$$
+
+Il problema da risolvere diventa:
+
+$$\max u_1^TSu_1$$
+
+Da cui massimizzando e settando la derivata rispetto ad u1 a 0:
+
+$$Su_1 = \lambda u_1$$
+$$u_1^TSu_1 = \lambda_1$$
+
+Chiamata first principal component.
+
+S = matrice di Covarianza
 
 ## Neural Networks
 
@@ -257,35 +479,6 @@ Backward step
 ### SGD
 
 ![Alt text](image.png)
-
-# K-Means
-
-1. Set a K Value
-2. Take K single clusters and assigns N-K samples to them based on distance between centroids and point. After each assignment recompute the centroid
-3. Take each sample and compute its distance from the centroid of the clusters, if the samples it is not in the centroid closest clusters switch it. Recompute the centroid
-4. Repeat 3 until convergence
-
-### Logistic Regression 2 class problem
-
-Given a binary classification problem:
-
-#### The likelihood is
-
-$$ P(t \mid w) = \prod_{i=1}^{n} yn^{tn}(1-yn)^{1-tn}$$
-
-so:
-
-$$yn = P(y=1 \mid a,s) = \sigma(w0 + w0a + w0s)$$
-
-#### Error function
-
-$$ E(w) = \ln P(t \mid w) = -\sum_{i=1}^{3} [tn \ln yn + (1-tn)\ln (1-yn)]$$
-
-#### Maximum likelihood Solution
-
-$$ w = \argmin E(w)$$
-
-Iterative reweighted least squares. In a nutshell SGD but with Hessian Matrix
 
 # CNN
 
@@ -357,7 +550,7 @@ Likelihood corresponds to a Multinomial distribution
 
 Output units saturate only when there are minimal errors.
 
-# Autoencoder
+### Autoencoder
 
 What is an autoencoder?
 
@@ -366,143 +559,6 @@ What is an autoencoder?
 3. provides low dimensional representation
 4. Bottleneck concept, which learn to reconstruct input minimizing a loss function
 5. Autoencoders can be seen as a method for non-linear principal component analysis
-
-# PCA
-
-### Principali Usi
-
-1. Dimensionality reduction
-2. data compression
-3. Data visualization
-4. Feature Extraction
-
-### Express the points in M
-
-$$ \overline{x}_{n} = \sum_{i=1}^{n} (x_{n}^T u_{i})u_{i}$$
-
-### Intrinsic dimension
-
-Minimum dimension to represent the dataset.
-
-### Goal: Maximize data variance after projection to some direction u1
-
-Projected Points:
-$x_{n}^Tu1$
-
-Anzitutto fissiamo $\overline{x}$ come la media del nostro dataset, centriamo dunque il dataset sulla nostra media in maniera tale che esso abbiamo media 0.
-A questo punto passiamo alla fase di massimizzazione della varianza calcolando la varianza come:
-
-$$ \frac{1}{N} \sum_{n=1}^N [u_{1}^Tx_{n} - u_{1}^T\overline{x}]^2 = u_1^TSu_1$$
-
-Il problema da risolvere diventa:
-
-$$\max u_1^TSu_1$$
-
-Da cui massimizzando e settando la derivata rispetto ad u1 a 0:
-
-$$Su_1 = \lambda u_1$$
-$$u_1^TSu_1 = \lambda_1$$
-
-Chiamata first principal component.
-
-S = matrice di Covarianza
-
-# SVM
-
-## SVM Classification
-
-Maximum Likelihood Solution:
-
-$$ w^*, w0^* = argmin \frac{1}{2} || w ||^2$$
-
-subject to:
-
-$$ tn(w^Tx + w0) \geq 1$$
-
-Classification new instance:
-
-$$y(x') = sign(\sum_{xk\in SV} a^*t_{k}x'^Txk + w0^*)$$
-
-### Soft margins
-
-Slack Variables in order to manage noise in the dataset:
-
-1. $\xi_{n}=0$ if point on or inside the correct margin boundary
-2. $0<\xi_{n}\leq1$ if point inside the margin but correct side
-3. $\xi_{n}>1$ if point on wrong side of the boundary
-
-subject to soft margin constraint:
-$$ t_{n}y(x_{n}) \geq 1-\xi_{n}$$
-
-Maximum Likelihood Solution:
-$$w^*, w0^* = \argmin \frac{1}{2}||w||^2 + C \sum_{n=1}^{N} \xi_{n}$$
-
-## SVM Kernelized
-
-$$
-J(w, C) = C \sum_{i=1}^{N} L_{\epsilon}(t_i, y_i) + \frac{1}{2} \| w \|^2,
-$$
-
-$$
-L_{\epsilon}(t, y) =
-\begin{cases}
-0 & \text{se } |t-y|<\epsilon \\
-|t-y|-\epsilon & \text{altrimenti}
-\end{cases}
-$$
-
-The main idea is to use a kernelized regression method computing the optimal solution without the Gramm Matrix that is computationally intensive.
-So we use di $\epsilon-insensitive$ error function. Is not differentiable
-
-So we've introduced slack variables.
-
-$$ \xi^+ > 0 \lrArr tn>y(xn) + \epsilon $$
-
-$$ \xi^- > 0 \lrArr tn<y(xn) - \epsilon $$
-
-So the error function:
-$$
-J(w, C) = C \sum_{i=1}^{N} (\xi^+ + \xi^-) + \frac{1}{2} \| w \|^2,
-$$
-
-# Least Squares
-
-The linear model:
-
-$$ y(x) = W^Tx$$
-
-1 of K coding scheme for t:
-
-$$ tk = 1 \rArr x \in Ck, tj = 0 \\s.t. \text{  } j \not ={k}$$
-
-#### The error function
-
-$$ E(w) = \frac{1}{2}Tr\{{(XW - T)^T(XW - T)}\} $$
-
-The solution:
-
-$$ w = (X^T X)^{-1}X^T T$$
-
-# Gaussian Mixture Model
-
-Gaussian Mixture Model is defined as:
-
-$$ P(x \mid \pi, \mu, \Sigma) = \sum_{k=1}^{K} \pi_{k}N(x \mid \mu_{k}, \Sigma_{k})$$
-
-### Maximum log-likelihood
-
-$$\ln P(x \mid \pi, \mu, \Sigma) = \sum_{n=1}^{N} \ln(\sum_{k=1}^{K} \pi_{k}N(x \mid \mu_{k}, \Sigma_{k}))$$
-
-### Expectation Maximization
-
-$$\pi_{k} = \frac{Nk}{N}$$
-$$N_{k} = \sum_{n=1}^{N} \gamma(Z_{nk})$$
-$$\mu_{k} = \frac{1}{Nk}\sum_{n=1}^{N} \gamma(Z_{nk}){x_{n}}$$
-$$\Sigma_{k} = \frac{1}{Nk}\sum_{n=1}^{N} \gamma(Z_{nk})(xn - \mu_{k})(xn - \mu_{k})^T$$
-
-where:
-
-$$\gamma(Z_{nk}) = \frac{\pi_{k} N(x\mid \mu_{k}, \Sigma_{k})}{\sum_{j=1}^{K} \pi_{j}N(x|\mu_{j}, \Sigma_{j})} $$
 
 # Ensemble
 
@@ -535,56 +591,3 @@ Given $( D = \{ (x_1, t_1), \ldots, (x_N, t_N) \} ), where ( x_n \in X, t_n \in 
      $$
      w_n^{(m+1)} = w_n^{(m)} \exp[\alpha_m I(y_m(x_n) \neq t_n)]
      $$
-
-# Perceptron
-
-Combinazione lineare pesata dell'input
-
-$$
-o(x_1, \ldots, x_d) =
-\begin{cases}
-1 & \text{if } w_0 + w_1x_1 + \ldots + w_dx_d > 0 \\
--1 & \text{otherwise}
-\end{cases}
-$$
-
-$$
-o(\mathbf{x}) =
-\begin{cases}
-1 & \text{if } \mathbf{w}^T\mathbf{x} > 0 \\
--1 & \text{otherwise}
-\end{cases}
-= \text{sign}(\mathbf{w}^T\mathbf{x})
-$$
-
-## Error Function
-
-$$E(W)=\frac{1}{2} \sum_{n=1}^{N}(tn-w^Tx_{n})^2$$
-
-calcola i parametri attraverso SGD.
-
-# Generative vs Discriminant Model
-
-A generative model learn the class conditional densities of each class $P(x\mid Ck)$ trying to understand the joint distribution of the data.
-
-Once we have this quantity we can easily compute the posterior $P(Ck \mid x)$ using Bayes Rule.
-
-On the other hand a discriminative model compute directly P(Ck \mid x).
-
-So we can define a generative model as:
-
-$$P(Ck\mid x) = \frac{P(x \mid Ck)P(Ck)}{\sum_{j}P(x \mid Cj)P(Cj)} = \frac{exp(ak)}{\sum_{j}exp(aj)}$$
-
-$a_{k} = \ln P(x \mid Ck)P(Ck)$
-
-On the other hand a **discriminative model**:
-
-$$P(Ck\mid x) =  \frac{exp(ak)}{\sum_{j}exp(aj)}$$
-
-Maximum log-likelihood solution:
-
-$$ w^* = argmax \ln P(t\mid w, x)$$
-
-Note:
-likelihood generative 2 classi utile per esercizio:
-$$P(t \mid \pi_1, \mu_1, \mu_2, \Sigma, D) = \prod_{n=1}^{N}[\pi_1N(x_n \mid u_1, \Sigma)]^{t_a}[(1-\pi_1)N(x_n \mid u_2, \Sigma)]^{1-t_a}$$
