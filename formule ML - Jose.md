@@ -32,11 +32,13 @@ In supervised learning, the dataset $D$ comprises, of pairs of input output
 
 $$D = \{<x,y>|x \in X, y \in Y \}$$
 
-An  hypothesis is a candidate model that approximates a target function for mapping inputs to outputs
+### Hypotesis
+
+An hypothesis is a candidate model that approximates a target function for mapping inputs to outputs
 
 ### Consistent hypotesis
 
-A hypothesis h is consistent with a set of training examples $D$ if and only if $h(x) = c(x)$ for each example $(x, c(x))$ in $D$.
+A hypothesis $h$ is consistent with a set of training examples $D$ if and only if $h(x) = c(x)$ for each example $(x, c(x))$ in $D$.
 
 ### Sample error
 
@@ -46,15 +48,15 @@ $$\text{error}_S(h) = \frac{1}{n} \sum_{x \in S} \delta(f(x) \neq {h(x)})$$
 
 ### True Error
 
-We assume that different instances of $X$ presented to us in the dataset is drawn from an unknown distribution $\mathcal{D}$. The true error is the error that the hypotesis make on any value choosen at random from $\mathcal{D}$.
+We assume that different instances of $X$ presented to us in the dataset are drawn from an unknown distribution $\mathcal{D}$. The true error is the error that the hypotesis make on any value choosen at random from $\mathcal{D}$.
 
-$$\text{error}_D(h) = P_{x \in D}(f(x) \neq {h(x)})$$
+$$\text{error}_{\mathcal{D}}(h) = P_{x \in {\mathcal{D}}}(f(x) \neq {h(x)})$$
 
 The true error is impossible to compute, but we can estimate it.
 
 ### Overfitting
 
-Given a hypotheses space $H$, a hypotheses $h \in H$, is said to overfit the training data if there exists some $h' \in H$, such that:
+Given an hypotheses space $H$, $h \in H$, is said to overfit the training data if there exists some $h' \in H$, such that:
 
 $$\text{error}_S(h) < \text{error}_S(h') \cap \text{error}_{\mathcal{D}}(h) > \text{error}_{\mathcal{D}}(h') $$
 
@@ -62,14 +64,35 @@ Overfitting occurs when the hypotesis is too complex compared to the task it tri
 
 ### Overfitting Decision Trees
 
-The depth of a tree controls it's complexity.
-A decision tree that perfectly classify training examples could lead to overfitting when there is either noise or/and not enough samples in the dataset.
-There are two possible approach this problem
+The depth of a tree controls it's complexity. A decision tree that perfectly classify training examples could lead to overfitting when there is either noise or/and not enough samples in the dataset. There are two possible ways to approach this problem:
 
 1. Stop growing the tree before it starts to overfit. The decision tree stops generating nodes when there is no good attribute to split on.
 2. Grow the full tree and then post prune using a statistical significant test.
 
 The second approach is to be preferred, because in the first is possible that at one given point no particular attribute is the best, but there are a combination that are informative.
+
+### K-Fold Cross Validation
+
+Cross-validation is a statistical method used to estimate the skill of machine learning models. It is commonly used in applied machine learning to compare and select a model for a given predictive modeling problem because it is easy to understand, easy to implement, and results in skill estimates that generally have a lower bias than other methods.
+
+- Partition dataset $k$ disjoint sets
+- For each set in the disjoint sets:
+  - Define the training set as the set differerence of the entire set and the partition
+  - Train your algorithm on the training set
+  - Determine the errors
+- Return the average error
+
+If we want to compare two learning algorithms
+
+- Partition dataset $k$ disjoint sets
+- For each set in the disjoint sets:
+  - Define the training set as the set differerence of the entire set and the partition
+  - Train your algorithm $A$ on the training set
+  - Train your algorithm $B$ on the training set
+  - Determine the error as the difference of the error in $A$ and error in $B$
+- Average the errors
+
+If the resulting error is negative $A$ is better than $B$, if its positive viceversa.
 
 ### Classification metrics
 
@@ -123,15 +146,15 @@ $$\stackrel{(2)}{=} \underset{h \in H}{\text{argmax}}  {P(D|h)P(h)}$$
 Assuming we know the prior probability of each hypotesis $h$, we can determine the most probable hypotesis by computing the $h_{MAP}$.
 However the knowledge of $P(h)$, might not be available, thus we have no reason to think that a particular hypotesis must be preferred over another, so we model it as a uniform distribution, thus $P(h)$ can be ignored, because it becomes a constant value.
 
-$$h_{ML} =\underset{h \in H}{\text{argmax}} P(h \mid D) = \text{argmax} P(D\mid h)$$
+$$h_{ML} =\underset{h \in H}{\text{argmax }} P(h \mid D) = \text{argmax} P(D\mid h)$$
 
 #### Optimal Bayes Classifier
 
 While the $h_{MAP}$ is the most probable hypotesis, given the data, it's classification might not be the most probable.
 The Bayes Optimal Classifier on the other hand classify each instance with its most probable value.
-The BOC, determines the most probable value by making a weighted sum of the probability of a specific value $v$, assuming that $h$ is true, weighted by the probability of $h$ being true given the data $D$.  
+The BOC, determines the most probable value by making a weighted sum of the probability of a specific value $v \in V$, assuming that $h$ is true, weighted by the probability of $h$ being true given the data $D$.  
 
-$$v_{obc} = \underset{h \in H}{\text{argmax}} \sum_{hi \in H} P(v | h)P(h | D)$$
+$$v_{obc} = \underset{v \in V}{\text{argmax}} \sum_{h \in H} P(v | h)P(h | D)$$
 
 The BOC, takes it's name from the fact that under the same hypotesis space, and with the same a priori knowledge no other method outperforms it on average.
 It is, however, not practical in real situations, due to its computationally intensive nature.
@@ -142,10 +165,10 @@ The Naive Bayes Classifier is a practical algorithm.
 It can be used under the assumption that any value $v \in V$, where $V$ is a finite set, that we want to compute, can be expressed as a conjunction of its attributes.
 Since every value can be described as a conjunction of its attributes, the naive Bayes algorithm determines $v_{map}$ in the following way:
 
-$$v_{MAP} = \underset{h \in H}{\text{argmax}}  P(v | a_1, a_2, .... , a_n) $$
+$$v_{MAP} = \underset{v \in V}{\text{argmax }}  P(v | a_1, a_2, .... , a_n) $$
 
-$$\stackrel{(1)}{=} \underset{h \in H}{\text{argmax}} P( a_1, a_2, .... , a_n | v) $$
-$$\stackrel{(2)}{=} \underset{h \in H}{\text{argmax}} P(v) \prod_i P(a_i | v) $$
+$$\stackrel{(1)}{=} \underset{v \in V}{\text{argmax }} P( a_1, a_2, .... , a_n | v) $$
+$$\stackrel{(2)}{=} \underset{v \in V}{\text{argmax }} P(v) \prod_i P(a_i | v) $$
 
 (1) Comes from the combined application of Bayes Theorem and that $P(a_1 , \ldots , a_n)$ is a constant.
 (2) Comes from the Independence assumption. The independence assumptions states that attributes values are conditionally independent given the target value.
@@ -157,22 +180,22 @@ While this assumption may not hold in every case, Naive Bayes remains a practica
 
 #### Document classification
 
-$$\text{doc}_{i} = \{abstract \cup title \cup author \cup pubblication \}$$
+$$doc_{i} = \{abstract \cup title \cup author \cup pubblication \}$$
 
 We can now set up a dataset vocabulary.
 
-So given a new doc doc_i we want to compute:
+So given a new doc $doc_i$ we want to compute:
 
-$$\text{V}_{NB} = \text{argmax} P(cj \mid D) \prod_{i=1}^{n} P(ai \mid cj, D)$$
-$$= \text{argmax} P(cj \mid D) P(d \mid cj, D)$$
+$$v_{NB} = \underset{v \in V}{\text{argmax }} P(c_j \mid D) \prod_{i=1}^{n} P(a_i \mid c_j, D)$$
+$$= \underset{v \in V}{\text{argmax }} P(c_j \mid D) P(d \mid c_j, D)$$
 
-We use an approaching bag of words (BoW) based on a multinomial distribution for multiclass problem.
+We use an approach called bag of words (BoW) based on a multinomial distribution for multiclass problem.
 
-We represent a doc as a fixed-lenght feature vector d given that we have
+We represent a doc as a fixed-length feature vector $d$
 
 $$d = <d1, ..., dn>$$
 
-where d_i = k if word i occurs k time in doc_i
+where $d_i = k$ if word $i$ occurs $k$ times in $doc_i$
 
 So for each feature we compute:
 
@@ -182,7 +205,7 @@ Maximum-likelihood solution:
 
 $$\hat{P}(w_i|c_j, D) = \frac{\sum_{\text{doc} \in D} tf_{i,j} + \alpha}{\sum_{\text{doc} \in D} tf_j + \alpha \cdot |V|} $$
 
-dove:
+Where :
 
 1. $$\text{tf}_{i,j} : \text{numero di occorrenze di \( w_i \) nel documento doc della classe \( c_j \)}.$$
 2. $$\text{tf}_{j} : \text{frequenza di tutti i termini del documento \( \text{doc} \) della classe \( c_j \)}.$$
@@ -201,29 +224,29 @@ $$t = y(x,\boldsymbol{w}) + \epsilon$$
 The optimal value of $\boldsymbol{w}$ can be determined using a maximum likelihood approach.
 Assuming $\epsilon$ is Gaussian error, and that observations are i.i.d we can define the likelihood function of $\boldsymbol{t}$ as:
 
-$$P( \boldsymbol{t} \mid \boldsymbol{x}, \boldsymbol{w}, \beta) = \prod_{i=1}^{n} N(t_i\mid y(x_i,\boldsymbol{w}), \beta^{-1})$$
+$$P( \boldsymbol{t} \mid \boldsymbol{x}, \boldsymbol{w}, \beta) = \prod_{i=1}^{n} \mathcal{N}(t_i\mid y(x_i,\boldsymbol{w}), \beta^{-1})$$
 
 Insted of maximizing this quantity we can maximize the log likelihood:
 
 $$\underset{\boldsymbol{w}}{\text{argmax}}( \log( P( \boldsymbol{t} \mid \boldsymbol{x}, w, \beta)))  $$
-$$= \underset{\boldsymbol{w}}{\text{argmax}} (\frac{N}{2} \log {\beta} - \frac{N}{2}\log (2\pi) - \beta E_D(\boldsymbol{w}))$$
+$$= \underset{\boldsymbol{w}}{\text{argmax}} (\frac{N}{2} \log {\beta} - \frac{N}{2}\log (2\pi) - \beta E(\boldsymbol{w}))$$
 
-$$\stackrel{(1)}{=} \underset{\boldsymbol{w}}{\text{argmax}} (E_D(\boldsymbol{w}))$$
-$$\stackrel{(2)}{=} \underset{\boldsymbol{w}}{\text{argmin}} (E_D(\boldsymbol{w}))$$
+$$\stackrel{(1)}{=} \underset{\boldsymbol{w}}{\text{argmax }} -E(\boldsymbol{w})$$
+$$\stackrel{(2)}{=} \underset{\boldsymbol{w}}{\text{argmin }} E(\boldsymbol{w})$$
 
 (1) Comes from the fact that argmax is invariant to constant addition and multiplication.
 (2) Come from the fact that maximization of the log likelihood is equivalent to the minimization of negative log likelihood.
 Where
 
-$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2$$
+$$E(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^T\boldsymbol{x_i}})^2$$
 
 In order to find the minimum we need to differentiate:
 
-$$\nabla E_d(\boldsymbol{w}) = \sum_{i=1}^{N} (t_i - \boldsymbol{w}^T x_i)x_i^T$$
+$$\nabla E(\boldsymbol{w}) = \sum_{i=1}^{N} (t_i - \boldsymbol{w}^T \boldsymbol{x_i})\boldsymbol{x_i}^T$$
 
 setting to zero:
 
-$$0 = \sum_{i=1}^{N} t_ix_i^T - \boldsymbol{w}^T (\sum_{i=1}^{N}{x_{i}x_{i}^T})$$
+$$0 = \sum_{i=1}^{N} t_i\boldsymbol{x_i}^T - \boldsymbol{w}^T (\sum_{i=1}^{N}{\boldsymbol{x_i}\boldsymbol{x_i}^T})$$
 
 Gives us the maximum likely solution, which can be written in closed form.
 
@@ -248,9 +271,10 @@ we can express the likelihood as
 $$P(\boldsymbol{t} \mid \boldsymbol{w}) = \prod_{n=1}^{N} y(\boldsymbol{x}_n)^{t_n}(1-y(\boldsymbol{x}_n))^{1-t_n}$$
 
 Since the logarithm is a non monotonic function, we can use the maximum likelihood approach and determine the optimal values by choosing $\boldsymbol{w}^*$ as the $\boldsymbol{w}$ that maximizes the log likelihood.
-Also since maximizing a function is the same thing as minimizing negative:
+Also since maximizing a function is the same thing as minimizing its negative:
 
-$$- \underset{\boldsymbol{w}}{\text{argmin}} (\ln P(\boldsymbol{t} \mid \boldsymbol{w})) = -\sum_{n = 1}^{N} [t_n \ln y(\boldsymbol{x}_n) + (1-t_n)\ln (1-y(\boldsymbol{x}_n))] = E(\boldsymbol{w})$$
+$$- \underset{\boldsymbol{w}}{\text{argmin}} (\ln P(\boldsymbol{t} \mid \boldsymbol{w})) = $$
+$$ -\sum_{n = 1}^{N} [t_n \ln y(\boldsymbol{x}_n) + (1-t_n)\ln (1-y(\boldsymbol{x}_n))] = E(\boldsymbol{w})$$
 
 Which is the negative cross entropy.
 
@@ -281,11 +305,11 @@ If an input vector $\boldsymbol{x}$, appers in an algorithm only as an inner pro
 
 Given a linear model
 
-$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^Tx$$
+$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^T\boldsymbol{x}$$
 
 We know, by using the maximum likely approach that a suitable error function, is the least square error
 
-$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2$$
+$$E(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^T\boldsymbol{x_i}})^2$$
 
 By setting it to $0$ we get the closed form of $\boldsymbol{w}^*$:
 
@@ -294,44 +318,43 @@ $$\boldsymbol{w}^* = (\boldsymbol{X}{\boldsymbol{X}^T})^{-1}\boldsymbol{X}^T\bol
 Were $\alpha$ is defined as $\boldsymbol{K}^{-1}\boldsymbol{t}$ and $\boldsymbol{K}$ is the Gram matrix.
 Putting $\boldsymbol{w}^*$ back into the model we obtain:
 
-$$y(x,\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+$$y(\boldsymbol{x},\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}\boldsymbol{x}= (\alpha\boldsymbol{X})^{T}  \boldsymbol{x}  = \sum_{n=1}^N \alpha_n\boldsymbol{x_n}^T\boldsymbol{x} $$
 
 By using the kernel trick:
 
-$$y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+$$y(\boldsymbol{x},\boldsymbol{w}^*) = \sum_{n=1}^N \alpha_n k(\boldsymbol{x_n},\boldsymbol{x}) $$
 
 ### Determination of kernelized version for linear regression with regularization
 
 Given a linear model
 
-$$y(x,\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^Tx$$
+$$y(\boldsymbol{x},\boldsymbol{w}) = w_0 + w_1x_1 + ... + w_dx_d = \boldsymbol{w}^T\boldsymbol{x}$$
 
 We know, by using the maximum likely approach that a suitable error function, is the least square error
 
-$$E_d(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^Tx_i})^2 + \lambda ||\boldsymbol{w}||^2$$
+$$E(\boldsymbol{w}) = \frac{1}{2} \sum_{i=1}^{N} ({t_i - \boldsymbol{w}^T\boldsymbol{x_i}})^2 + \lambda ||\boldsymbol{w}||^2$$
 
 Where $\lambda$ is a regularization term that controls the model complexity.
 By setting it to $0$ we get the closed form of $\boldsymbol{w}^*$:
 
-$$\boldsymbol{w}^* = (\boldsymbol{X}{\boldsymbol{X}^T} +\lambda \boldsymbol{I_n})^{-1}\boldsymbol{X}^T\boldsymbol{t} = \alpha \boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_nx_n $$
+$$\boldsymbol{w}^* = (\boldsymbol{X}{\boldsymbol{X}^T} +\lambda \boldsymbol{I_n})^{-1}\boldsymbol{X}^T\boldsymbol{t} = \alpha \boldsymbol{X}^T = \sum_{n=1}^{N} \alpha_n\boldsymbol{x_n} $$
 
 Were $\boldsymbol{\alpha}$ is defined as $(\boldsymbol{K}+\lambda \boldsymbol{I_n})^{-1}\boldsymbol{t}$ and $\boldsymbol{K}$ is the Gram matrix.
 Putting $\boldsymbol{w}^*$ back into the model we obtain:
 
-$$y(x,\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N \alpha_nx_n^Tx $$
+$$y(x,\boldsymbol{w}^*) = \boldsymbol{w}^{*^T}x = (\alpha\boldsymbol{X})^{T}  x  = \sum_{n=1}^N \alpha_n\boldsymbol{x_n}^T\boldsymbol{x} $$
 
 By using the kernel trick:
 
-$$y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N \alpha_nk(x_n,x) $$
+$$y(x,\boldsymbol{w}^*) =  \sum_{n=1}^N \alpha_nk(\boldsymbol{x_n},\boldsymbol{x}) $$
 
 ### Generative vs Discriminant Model
 
-In a probabilistic framework the joint probability $P(\boldsymbol{x}\boldsymbol{t})$ gives us the most complete information.
-However determining it directly is often an unfeasible task.
-We can then use two different approaches.
-A generative approach aims to understand how data is generated, it does so by learning the class conditional densities of each class $P(x\mid C_k)$, the prior $P(C_k)$, and then determining the posterior $P(C_k \mid \boldsymbol{x})$.
+In a probabilistic framework the joint probability $P(\boldsymbol{x}, \boldsymbol{t})$ gives us the most complete information. However determining it directly is often an unfeasible task.
+We can instead use two different approaches.
+A generative approach aims to understand how data is generated, it does so by learning the class conditional densities of each class $P(\boldsymbol{x} \mid C_k)$, the prior $P(C_k)$, and then determining the posterior $P(C_k \mid \boldsymbol{x})$.
 
-A discriminative approach are interessed in determining the decision boundary. This can be done in a probabilistic way, for example linear regression uses the form of the class conditional probability $P(C_k \mid x)$ of the Generalized linear models and find the best parameters by using a maximum likelihood approach. Another approach is to directly determine de decision boundary without manipulating explicitly probabilities.
+A discriminative approach are interessed in determining the decision boundary. This can be done in a probabilistic way, for example linear regression uses the form of the class conditional probability $P(C_k \mid \boldsymbol{x})$ of the Generalized linear models and find the best parameters by using a maximum likelihood approach. Another approach is to directly determine de decision boundary without manipulating explicitly probabilities.
 
 ### Perceptron
 
@@ -428,7 +451,7 @@ There are models, like SVM that only support binary classification.
 It is possible to extend the capabilities of the SVM into a $k$-classes classifier by using two approaches
 
 - OVR: The One Versus Rest approach trains $k-1$ different classifiers, each specialized on distinguishing its class from the others. The $k$-th is determined by the other $k-1$ classifiers.
-- OVO: The One Versus One approach trains $\frac{k}{k-1}/2$ different classifiers, corresponding to the total pair of possible classes.
+- OVO: The One Versus One approach trains $\frac{k(k-1)}{2}$ different classifiers, corresponding to the total pair of possible classes.
 
 The classification result is chosen by a majority vote.
 
@@ -513,9 +536,9 @@ By sorting them from largest to lowest, we can get the $M$ principal components 
 
 #### Minimum Error Formulation
 
-PCA can be defined as the linear projection that minimizes the average projection cost, defined as the mean squared distance between data points and their projection
+PCA can be defined as the linear projection that minimizes the average projection cost, defined as the mean squared distance between data points and their projection.
 
-## Reinforcment Learning
+## Reinforcement Learning
 
 ### Problem definition
 
@@ -648,8 +671,9 @@ It takes the gradient of the loss and makes it "flow" up until the input
 - Determine the gradient of the loss
 - For each layer starting from the last layer:
   - Determine the gradient of the linear combination of inputs pre activation
-  - Determine the gradient of the linear combinations of inputs post activation
-  - Determine the gradient of the bias
+  - Assign the the gradient of the linear combination of inputs pre activation to the bias
+  - Determine the gradient of the linear combination of inputs post activation
+  - Backpropagate the gradient weighted by the current layer weight vector
   
 ### SGD
 
@@ -768,7 +792,7 @@ Given $( D = \{ (x_1, t_1), \ldots, (x_N, t_N) \} ), where ( x_n \in X, t_n \in 
 - Uniformly initialize the weights.
 - For $( m = 1, \ldots, M )$:
 
-  - Train a weak learner $( y_m(x) )$ by minimizing the weighted error function.
+  - Train a weak learner $( y_m(x) )$ by minimizing the weighted error function $\sum_{n=1}^{N} w_n I(y_n \neq t_n)$.
   - Evaluate alpha, the confidence that we put on the predictive power
   - Update the data weighting coefficients
 
